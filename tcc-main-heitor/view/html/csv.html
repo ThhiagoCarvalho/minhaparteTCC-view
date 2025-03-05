@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload de CSV</title>
+</head>
+<body>
+    <input type="file" id="txtarquvio" placeholder="arquivo" accept=".csv">
+    <button id="btnEnviar">Clique aqui</button>
+</body>
+<script>
+    const btn = document.getElementById('btnEnviar');
+    const txtArquivo = document.getElementById('txtarquvio');
+
+    btn.onclick = function() { 
+        cadastrar();
+    };
+
+    function cadastrar() {
+        let arquivo = txtArquivo.files[0];
+        if (!arquivo) {
+            console.error("Nenhum arquivo selecionado.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('arquivo', arquivo);
+
+        let uri = '/alunos/csv';
+        fetch(uri, {
+            method: "POST",
+            body: formData
+        })
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+    }
+</script>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina do professor</title>
+    <link rel="stylesheet" href="../css/paginaProfessor.css">
+
+    <!-- fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+</head>
+<style>
+    .botao-flutuante {
+        position: fixed;
+        bottom: 30px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background-color: #00488B;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        font-size: 34px;
+        cursor: pointer;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        transition: background 0.3s ease;
+    }
+
+    .botao-flutuante:hover {
+        background-color: #003366;
+    }
+
+
+
+    #historicoOcorrencia {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .ocorrencia {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #fff;
+        padding: 12px;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        transition: 0.3s;
+    }
+
+    .ocorrencia h4 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .ocorrencia .ver-detalhes {
+        cursor: pointer;
+        color: #00488B;
+        font-size: 22px;
+        transition: 0.3s;
+    }
+
+    .ocorrencia .ver-detalhes:hover {
+        color: #002244;
+    }
+</style>
+
+<body>
+    <main>
+        <header>
+            <div class="wrapper">
+
+                <div class="menu-desktop">
+                    <button onclick="abrirmenu()" id="btn-menu">
+                        <span class="linha"></span>
+                        <span class="linha"></span>
+                        <span class="linha"></span>
+                    </button>
+                    <nav>
+                        <ul>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+
+                <div class="menu-mobile" id="menu-mobile">
+                    <nav>
+                        <ul>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="container">
+                    <div class="texto-inicio">
+                        <p id="mensagem"></p>
+                        <h3>Pagina inicial</h3>
+                    </div>
+                    <div class="caixas">
+                        <h3>Ocorrencias Enviadas</h3>
+                        <div class="box-historicoOcorrencia">
+                            <p>Esta e unma caixa pequna</p>
+                            <div id="historicoOcorrencia"></div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </header>
+    </main>
+    <button id="btn-abrir-form" class="botao-flutuante" onclick="chamarforms()">+</button>
+    <script>
+        const menuDiv = document.getElementById("menu-mobile")
+        const btnAnimar = document.getElementById("btn-menu")
+
+        btnAnimar.addEventListener('click', animarMenu)
+        function animarMenu() {
+            menuDiv.classList.toggle('abrir')
+            btnAnimar.classList.toggle('ativo')
+
+        }
+
+        const dadosFuncionario = localStorage.getItem("Funcionario")
+        const objFuncionario = JSON.parse(dadosFuncionario);
+
+        document.getElementById("mensagem").textContent = `Seja bem-vindo ${objFuncionario.Funcionario._nome}`;
+
+        function chamarforms() {
+            window.location = "formsOcorrencia.html"
+        }
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const historicoOcorrencia = document.getElementById("historicoOcorrencia");
+
+            const ocorrencias = [
+                { id: 1, titulo: "Aluno ausente em prova" },
+                { id: 2, titulo: "Desrespeito em sala" },
+                { id: 3, titulo: "Tarefa não entregue" }
+            ];
+
+            // Adicionar cada ocorrência dinamicamente
+            ocorrencias.forEach(ocorrencia => {
+                const div = document.createElement("div");
+                div.classList.add("ocorrencia");
+                div.innerHTML = `
+                <h4>${ocorrencia.titulo}</h4>
+                <span class="ver-detalhes" onclick="visualizarOcorrencia(${ocorrencia.id})">
+
+                </span>`;
+                historicoOcorrencia.appendChild(div);
+            });
+        });
+
+        
+    </script>
+</body>
