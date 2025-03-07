@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina do professor</title>
+    <link rel="stylesheet" href="../css/paginaProfessor.css">
+
+    <!-- fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Link correto para os ícones do Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+</head>
+<style>
+    #historicoOcorrencia {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .ocorrencia {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #fff;
+        padding: 12px;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        transition: 0.3s;
+    }
+
+    .ocorrencia h4 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .ocorrencia .ver-detalhes {
+        cursor: pointer;
+        color: #00488B;
+        font-size: 22px;
+        transition: 0.3s;
+    }
+
+    .ocorrencia .ver-detalhes:hover {
+        color: #002244;
+    }
+</style>
+
+<body>
+    <main>
+        <header>
+            <div class="wrapper">
+
+                <div class="menu-desktop">
+                    <button onclick="abrirmenu()" id="btn-menu">
+                        <span class="linha"></span>
+                        <span class="linha"></span>
+                        <span class="linha"></span>
+                    </button>
+                    <nav>
+                        <ul>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+
+                <div class="menu-mobile" id="menu-mobile">
+                    <nav>
+                        <ul>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="container">
+                    <h3>Ocorrencias Pendentes</h3>
+                    <div class="box-historicoOcorrencia">
+                        <div id="historicoOcorrencia"></div>
+
+                    </div>
+
+                </div>
+            </div>
+        </header>
+    </main>
+    <script>
+        const menuDiv = document.getElementById("menu-mobile")
+        const btnAnimar = document.getElementById("btn-menu")
+
+        btnAnimar.addEventListener('click', animarMenu)
+        function animarMenu() {
+            menuDiv.classList.toggle('abrir')
+            btnAnimar.classList.toggle('ativo')
+
+        }
+
+        function chamarforms() {
+            window.location = "formsOcorrencia.html"
+        }
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const historicoOcorrencia = document.getElementById("historicoOcorrencia");
+
+            const ocorrencias = [
+                { id: 1, titulo: "Aluno ausente em prova" },
+                { id: 2, titulo: "Desrespeito em sala" },
+                { id: 3, titulo: "Tarefa não entregueTarefa não entregueTarefa não entregueTarefa não entregueTarefa não entregueTarefa não entregue" },
+                { id: 4, titulo: "Material danificado" }, // Exemplo extra
+                { id: 3, titulo: "Tarefa não entregueTarefa não entregueTarefa não entregueTarefa não entregueTarefa não entregueTarefa não entregue" },
+                { id: 4, titulo: "Material danificado" }, // Exemplo extra
+
+            ];
+
+            // Adicionar cada ocorrência dinamicamente
+            ocorrencias.forEach(ocorrencia => {
+                const div = document.createElement("div");
+                div.classList.add("ocorrencia");
+                div.innerHTML = `
+                <h4>${ocorrencia.titulo}</h4>
+                <span class="ver-detalhes" onclick="visualizarOcorrencia(${ocorrencia.id})">
+                <i class="bi bi-eye-fill"></i>
+
+                </span>`;
+                historicoOcorrencia.appendChild(div);
+            });
+        });
+
+
+    </script>
+</body>

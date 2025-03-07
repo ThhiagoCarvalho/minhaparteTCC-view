@@ -158,33 +158,53 @@
 
 
         // codigo para aparecer as ocorrencia pendentes : 
-
         document.addEventListener("DOMContentLoaded", function () {
-            const ocorrenciasPendentes = document.getElementById("ocorrenciasPendentes");
+    const ocorrenciasPendentes = document.getElementById("ocorrenciasPendentes");
 
-            const ocorrencias = [
-                { id: 1, titulo: "Aluno ausente em prova" },
-                { id: 2, titulo: "Desrespeito em sala brawlstar bralwstar bralwstar brawlstar Desrespeito em sala brawlstar bralwstar bralwstar brawlstar" },
-                { id: 3, titulo: "Tarefa não entregue" }
-            ];
+    const ocorrencias = [
+        { id: 1, titulo: "Aluno ausente em prova" },
+        { id: 2, titulo: "Desrespeito em sala" },
+        { id: 3, titulo: "Tarefa não entregueTarefa não entregueTarefa não entregueTarefa não entregueTarefa não entregueTarefa não entregue" },
+        { id: 4, titulo: "Material danificado" }, // Exemplo extra
+    ];
 
-            // Adicionar cada ocorrência dinamicamente
-            ocorrencias.forEach(ocorrencia => {
-                const div = document.createElement("div");
-                div.classList.add("ocorrencia");
-                div.innerHTML = `
-                <h4>${ocorrencia.titulo}</h4>
-                <span class="ver-detalhes" onclick="visualizarOcorrencia(${ocorrencia.id})">
-                    <i class="bi bi-eye-fill"></i>
-                </span>`;
-                ocorrenciasPendentes.appendChild(div);
-            });
-        });
+    const limite = 3;
 
-        function visualizarOcorrencia(id) {
-        // window.location.href = `detalhesOcorrencia.html?id=${id}`;
+    // Usando FOR ao invés de slice()
+    for (let i = 0; i < ocorrencias.length && i < limite; i++) {
+        const ocorrencia = ocorrencias[i];
+        const div = document.createElement("div");
+        div.classList.add("ocorrencia");
+        div.innerHTML = `
+            <h4>${ocorrencia.titulo}</h4>
+            <span class="ver-detalhes" onclick="visualizarOcorrencia(${ocorrencia.id})">
+                <i class="bi bi-eye-fill"></i>
+            </span>`;
+        ocorrenciasPendentes.appendChild(div);
+    }
 
-            window.location.href = `formsOcorrenciaCoordenacao.html`;
-        }
+    if (ocorrencias.length > limite) {
+        const botao = document.createElement("button");
+        botao.textContent = "Ver todas as ocorrências";
+        botao.style.cssText = `
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #00488B;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        `;
+        botao.onclick = function () {
+            window.location.href = "ocorrenciasPendentes.html";
+        };
+        ocorrenciasPendentes.appendChild(botao);
+    }
+});
+
+function visualizarOcorrencia(id) {
+    window.location.href = `formsOcorrenciaCoordenacao.html`;
+}
+
     </script>
 </body>

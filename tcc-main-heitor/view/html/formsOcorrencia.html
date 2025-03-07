@@ -18,6 +18,8 @@
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Bootstrap JS (necessário para o modal funcionar corretamente) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </head>
 
@@ -65,8 +67,13 @@
                             </div>
                             <div class="modal-body">
                                 <form id="userForm">
+
                                     <div class="mb-3">
                                         <div class="input-group">
+                                            <button type="button" class="btn btn-success"
+                                                onclick="adicionarMatricula()">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
                                             <input type="text" class="form-control" id="matricula" placeholder=""
                                                 required>
                                             <div class="divpesquisa"><span class="input-group-text" id="botaoPesquisa">
@@ -86,7 +93,36 @@
                                         <input type="text" class="form-control" id="conduta" required>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary" id="botaoOk">Enviar</button>
+                                    <!--<button type="submit" class="btn btn-primary" id="botaoOk">Enviar</button>-->
+                                    <div class="d-flex align-items-center">
+                                        <button type="submit" class="btn btn-primary" id="botaoOk">Enviar</button>
+                                        <button type="button" class="btn btn-secondary ms-2 d-none" id="verMatriculas"
+                                            onclick="abrirModal()">
+                                            <i class="bi bi-eye-fill"></i>
+                                        </button>
+                                    </div>
+
+                                    <!-- Modal do Bootstrap -->
+                                    <div class="modal fade" id="modalMatriculas" tabindex="-1"
+                                        aria-labelledby="modalMatriculasLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Matrículas Adicionadas</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Fechar"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ul class="list-group" id="listaMatriculas"></ul>
+                                                    <!-- Lista de matrículas -->
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Fechar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -244,6 +280,69 @@
                 alert("Nenhuma página anterior encontrada!");
             }
         }
+
+        let vetorMatriculas = []
+
+        function adicionarMatricula() {
+            if (matriculaAluno.value.trim() === "") {
+                alert("Digite uma matrícula válida!"); // Validação para evitar campos vazios
+                return;
+            }
+            let botaoVerMatriculas = document.getElementById("verMatriculas");
+
+            vetorMatriculas.push(matriculaAluno.value)
+            botaoVerMatriculas.classList.remove("d-none");
+
+            matriculaAluno.textContent = ""
+            matriculaAluno.value = "";
+
+        }
+
+        function abrirModal() {
+            let listaMatriculas = document.getElementById("listaMatriculas");
+            listaMatriculas.innerHTML = ""; // Limpa a lista antes de atualizar
+
+            if (vetorMatriculas.length === 0) {
+                listaMatriculas.innerHTML = "<li class='list-group-item text-center'>Nenhuma matrícula adicionada.</li>";
+            } else {
+                vetorMatriculas.forEach((matricula, index) => {
+                    let li = document.createElement("li");
+                    li.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
+                    li.innerHTML = `
+                ${matricula}
+                <button class="btn btn-danger btn-sm" onclick="removerMatricula(${index})">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            `;
+                    listaMatriculas.appendChild(li);
+                });
+            }
+
+            // Abre o modal do Bootstrap
+            // Verifica se o modal existe antes de abrir
+            let modalElement = document.getElementById("modalMatriculas");
+            let modalInstance = bootstrap.Modal.getInstance(modalElement);
+
+            if (!modalInstance) {
+                modalInstance = new bootstrap.Modal(modalElement);
+            }
+
+            modalInstance.show();
+        }
+
+        function removerMatricula(index) {
+            vetorMatriculas.splice(index, 1); // Remove do array
+
+            abrirModal(); // Atualiza a lista dentro do modal
+
+            // Se não houver mais matrículas, esconde o botão do olho e fecha o modal
+            if (vetorMatriculas.length === 0) {
+                document.getElementById("verMatriculas").classList.add("d-none");
+                let modalInstance = bootstrap.Modal.getInstance(document.getElementById("modalMatriculas"));
+                if (modalInstance) modalInstance.hide();
+            }
+        }
+
     </script>
 </body>
 

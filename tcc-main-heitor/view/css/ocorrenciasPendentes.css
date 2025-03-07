@@ -1,0 +1,280 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", serif;
+}
+
+.wrapper {
+    display: flex;
+    /* Menu e conteúdo lado a lado */
+}
+
+
+
+
+/*estilizacao da nav-bar*/
+
+.menu-desktop {
+    text-align: center;
+    height: 100vh;
+    padding: 20px;
+    background-color: #00488B;
+}
+
+
+.menu-desktop nav ul li {
+    padding: 7px;
+}
+
+
+header .menu-desktop nav ul {
+    list-style-type: none;
+}
+
+header .menu-desktop nav ul li a {
+    list-style-type: none;
+    display: block;
+    margin: 10px 0;
+    color: #ffffff;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.menu-desktop nav a:hover {
+    list-style-type: none;
+    transform: scale(1.05);
+}
+
+
+/*estilizacao do da div pai*/
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: 100%;
+}
+
+.container .texto-inicio {
+    background-color: rgb(220, 218, 217);
+}
+
+
+/*estilizacao das caixas filho*/
+
+.box-historicoOcorrencia {
+    background-color: rgb(220, 218, 217);
+    text-align: center;
+    margin-right: auto;
+    padding-right: 10px;
+    text-align: left;
+    width: 90%;
+    padding: 10px;
+}
+
+.box-dadosRecentes {
+    background-color: rgb(220, 218, 217);
+    margin-bottom: 50px;
+}
+
+.box-historicoOcorrencia h3 {
+    padding-left: 10px;
+}
+
+.box-AlunosAlerta {
+    background-color: rgb(220, 218, 217);
+}
+
+/*deixa as duas caixa em vertical*/
+
+.horizontal {
+    max-width: 640px;
+    padding-right: 20px;
+    width: 100%;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.caixas {
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 70px;
+}
+
+.box-pequeno {
+    width: 200px;
+    padding: 20px;
+    background-color: rgb(218, 100, 41);
+    text-align: center;
+}
+
+
+/* estilizacao do menu mobile*/
+.menu-mobile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #00488B;
+    visibility: hidden;
+    z-index: 1500;
+    height: 0;
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+.menu-mobile nav ul {
+    list-style-type: disc;
+    /* Ou 'circle' se quiser bolinhas abertas */
+    padding-left: 40px;
+}
+
+
+.menu-mobile nav a {
+    list-style-type: none;
+    display: block;
+    margin: 30px 0 15px 0;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 20px 30px;
+
+    transition: 0.2s;
+}
+
+.menu-mobile nav a:hover {
+    list-style-type: none;
+    transform: scale(1.05);
+    background-color: #0a5397;
+}
+
+
+/*estilizacao do botao que abre o menu no celular*/
+#btn-menu {
+    background: transparent;
+    width: 50px;
+    height: 50px;
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 2px solid #fff;
+    transition: 0.2s;
+    display: none;
+    z-index: 1000;
+
+}
+
+.linha {
+    position: relative;
+    height: 3px;
+    background: #fff;
+    display: block;
+    width: 25px;
+    margin: 5px auto;
+    transform-origin: center;
+    transition: 0.5s;
+}
+
+button.ativo .linha:nth-child(1) {
+    transform: translateY(37.5px) rotate(-42deg);
+    background-color: white;
+    bottom: 67.5%;
+}
+
+button.ativo .linha:nth-child(3) {
+    transform: translateY(-37.5px) rotate(42deg);
+    background-color: white;
+    top: 60%;
+}
+
+button.ativo .linha:nth-child(2) {
+    opacity: 0;
+}
+
+button.ativo {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1100;
+}
+
+
+
+@media screen and (max-width:700px) {
+    .menu-desktop nav ul {
+        display: none;
+
+    }
+
+    .menu-mobile.abrir {
+        visibility: visible;
+        height: 100vh;
+    }
+
+    #btn-menu {
+        display: block;
+        z-index: 1501;
+
+    }
+
+
+    .container {
+        display: block;
+        padding: 10px;
+    }
+
+    .menu-desktop {
+        position: relative;
+        right: 17px;
+        width: 80px;
+    }
+}
+
+
+
+@media screen and (max-width: 370px) {
+
+    .container .texto-inicio {
+        padding-right: 2px;
+    }
+
+    .menu-desktop {
+        position: relative;
+        right: 17px;
+        width: 80px;
+        height: auto;
+    }
+
+    .container {
+        position: relative;
+        right: 14px;
+        height: 100vh;
+        padding: 11px;
+        display: flex;
+        flex-direction: column;
+        /* Empilha os elementos em coluna */
+        align-items: center;
+        /* Centraliza os itens */
+    }
+
+    .caixas {
+        flex-direction: column;
+        /* Mantém as caixas empilhadas */
+        align-items: center;
+    }
+
+    .box-historicoOcorrencia {
+        margin-top: 25px;
+
+    }
+
+    .box-dadosRecentes,
+    .box-AlunosAlerta,
+    .box-historicoOcorrencia {
+        width: 100%;
+        min-width: 161px;
+        height: auto;
+    }
+}
