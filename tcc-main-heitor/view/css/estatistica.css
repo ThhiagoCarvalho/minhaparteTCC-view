@@ -1,0 +1,287 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", serif;
+
+}
+
+.wrapper {
+    display: flex;
+    /* Menu e conteúdo lado a lado */
+}
+
+.menu-desktop {
+    text-align: center;
+    height: 100vh;
+    padding: 20px;
+
+    background-color: #00488B;
+}
+
+.container .texto-inicio {
+    background-color: rgb(220, 218, 217);
+
+}
+
+.menu-desktop nav ul li {
+    padding: 10px;
+}
+
+
+header .menu-desktop nav ul {
+    list-style-type: none;
+
+}
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: 100%;
+}
+
+.container .texto-inicio {
+    background-color: rgb(220, 218, 217);
+}
+
+
+
+
+.graficoOcorrencias {
+    padding-right: 10px;
+    text-align: left;
+    margin-bottom: 30px;
+    width: 90%;
+}
+
+
+
+.caixas {
+    flex-direction: column;
+    align-items: center;
+}
+
+header .menu-desktop nav ul li a {
+    list-style-type: none;
+    display: block;
+    margin: 10px 0;
+    color: #ffffff;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+
+.menu-desktop nav a:hover {
+    list-style-type: none;
+    transform: scale(1.05);
+}
+
+.container {
+    flex: 1;
+    /* Ocupa o espaço restante */
+    display: flex;
+    flex-direction: column;
+    /* Alinha o conteúdo em coluna */
+    padding: 20px;
+    height: 100%;
+}
+
+
+/* estilizacao do menu mobile*/
+
+.menu-mobile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #00488B;
+    transform: translateY(-100%);
+    /* Esconde o menu fora da tela */
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    opacity: 0;
+    /* Menu invisível inicialmente */
+    z-index: 1000;
+    /* Fica acima do formulário */
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Quando o menu abre */
+.menu-mobile.abrir {
+    transform: translateY(0);
+    /* Mostra o menu */
+    opacity: 1;
+    /* Torna visível */
+}
+
+.menu-mobile nav a {
+    list-style-type: none;
+    display: block;
+    margin: 30px 0 15px 0;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 20px 30px;
+
+    transition: 0.2s;
+}
+
+.menu-mobile nav a:hover {
+    list-style-type: none;
+    transform: scale(1.05);
+    background-color: #0a5397;
+}
+
+#btn-menu {
+    background: transparent;
+    width: 50px;
+    height: 50px;
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 2px solid #fff;
+    transition: 0.2s;
+    display: none;
+    z-index: 1900;
+    list-style-type: none;
+
+}
+
+.linha {
+    position: relative;
+    height: 3px;
+    background: #fff;
+    display: block;
+    width: 25px;
+    margin: 5px auto;
+    transform-origin: center;
+    transition: 0.5s;
+}
+
+button.ativo .linha:nth-child(1) {
+    transform: translateY(37.5px) rotate(-42deg);
+    background-color: white;
+    bottom: 67.5%;
+}
+
+button.ativo .linha:nth-child(3) {
+    transform: translateY(-37.5px) rotate(42deg);
+    background-color: white;
+    top: 60%;
+}
+
+button.ativo .linha:nth-child(2) {
+    opacity: 0;
+}
+
+button.ativo {
+
+    position: fixed;
+    /* Fixa o botão na tela */
+    top: 20px;
+    /* Ajuste conforme necessário */
+    right: 20px;
+    /* Ajuste conforme necessário */
+    z-index: 1900;
+    /* Garante que fique acima do menu */
+}
+
+
+@media screen and (max-width:700px) {
+    .menu-desktop nav ul {
+        display: none;
+        list-style-type: none;
+
+    }
+
+    .menu-mobile.abrir {
+        visibility: visible;
+        height: 100vh;
+    }
+
+    #btn-menu {
+        display: block;
+        z-index: 1900;
+
+    }
+
+    .container {
+        display: block;
+    }
+}
+
+.menu-desktop nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+/*estilizacao do forms*/
+.container-wrapper {
+    display: flex;
+    justify-content: center;
+    /* Centraliza o conteúdo */
+    text-align: center;
+    gap: 20px;
+    /* Espaço entre os elementos */
+    padding: 20px;
+}
+
+
+
+/* Responsividade para telas menores */
+@media (max-width: 640px) {
+
+
+}
+
+
+@media (max-width: 550px) {
+
+
+    .menu-desktop {
+        height: auto;
+        /* A altura se ajusta automaticamente */
+        width: 100%;
+        /* A barra ocupa toda a largura */
+        padding: 10px 10px;
+        /* Adiciona um espaço vertical */
+    }
+
+    .menu-desktop nav ul {
+        display: flex;
+        /* Torna a lista flexível */
+        flex-direction: row;
+        /* Alinha os itens horizontalmente */
+        justify-content: space-around;
+        /* Distribui o espaço igualmente */
+        align-items: center;
+        /* Centraliza os itens na vertical */
+        padding: 0;
+        list-style: none;
+
+    }
+
+    .menu-desktop nav ul li {
+        padding: 7px;
+        /* Ajusta o espaçamento entre os itens */
+    }
+
+    .menu-desktop nav ul {
+        list-style: none;
+
+        display: none;
+    }
+
+
+    .wrapper {
+        flex-direction: column;
+        /* Coloca o conteúdo em coluna */
+    }
+}
+
+
+@media (max-width: 340px) {
+    /* CORRETO */
+
+}

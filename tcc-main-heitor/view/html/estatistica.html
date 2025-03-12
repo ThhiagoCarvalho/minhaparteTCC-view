@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/estatistica.css">
+
+    <!-- fontes das letras -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- fontes do bootstrap -->
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Bootstrap JS (necessário para o modal funcionar corretamente) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+
+<body>
+
+    <main>
+        <header>
+            <div class="wrapper"> <!-- Novo wrapper para separar o menu -->
+
+                <div class="menu-desktop">
+                    <button onclick="abrirmenu()" id="btn-menu">
+                        <span class="linha"></span>
+                        <span class="linha"></span>
+                        <span class="linha"></span>
+                    </button>
+                    <nav>
+                        <ul>
+                            <li><a href="#" onclick="voltarPaginaAnterior(); return false;">Início</a></li>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+
+                <div class="menu-mobile" id="menu-mobile">
+                    <nav>
+                        <ul>
+                            <li><a href="#" onclick="voltarPaginaAnterior(); return false;">Início</a></li>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="container">
+                    <div class="caixas">
+                        <div class="graficoOcorrencias">
+                            <h3>Alunos em Alerta</h3>
+
+                            <div style="width: 60%; height: 500px; border: 1px solid #ccc; overflow: hidden;">
+                                <iframe src="../html/graficoteste.html" width="100%" height="100%"
+                                    style="border: none;"></iframe>
+                            </div>
+                        </div>
+
+                        <div class="graficoOcorrencias">
+                            <h3>Alunos em Alerta</h3>
+                            <div style="width: 60%; height: 500px; border: 1px solid #ccc; overflow: hidden;">
+                                <iframe src="../html/graficoteste.html" width="100%" height="100%"
+                                    style="border: none;"></iframe>
+                            </div>
+                        </div>
+
+                        <div class="graficoOcorrencias">
+                            <h3>Alunos em Alerta</h3>
+                            <div style="width: 60%; height: 500px; border: 1px solid #ccc; overflow: hidden;">
+                                <iframe src="../html/graficoteste.html" width="100%" height="100%"
+                                    style="border: none;"></iframe>
+                            </div>
+                        </div>
+
+                        
+                        <div class="graficoOcorrencias">
+                            <h3>Alunos em Alerta</h3>
+                            <div style="width: 60%; height: 500px; border: 1px solid #ccc; overflow: hidden;">
+                                <iframe src="../html/graficoteste.html" width="100%" height="100%"
+                                    style="border: none;"></iframe>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </header>
+    </main>
+
+
+    <script>
+        /*codigo para o menu do site */
+        const menuDiv = document.getElementById("menu-mobile")
+        const btnAnimar = document.getElementById("btn-menu")
+        const forms = document.getElementById("container-wrapper")
+
+        btnAnimar.addEventListener('click', animarMenu)
+        function animarMenu() {
+            menuDiv.classList.toggle('abrir')
+            btnAnimar.classList.toggle('ativo')
+
+            forms.style.display = "none";
+
+            if (menuDiv.classList.contains('abrir')) {
+                forms.style.display = "none"; // Esconde o formulário
+            } else {
+                forms.style.display = "flex"; // Mostra o formulário novamente
+            }
+        }
+
+
+
+
+    </script>
+
+</body>
+
+</html>
