@@ -230,10 +230,11 @@ button.ativo {
 .form-container {
     width: 300px; /* Largura do formulário */
     max-width: 400px; /* Evita que fique muito grande */
-    z-index: 0;
 }
 
 .student-info {
+    position: relative; /* Garante que o botão fique dentro do card */
+
     width: 200px; /* Largura do card */
     max-width: 300px;
     height: 330px;
@@ -325,3 +326,17 @@ button.ativo {
     .modal-title{
         margin-bottom: 10px;
     }
+
+
+    .custom-close {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: transparent;
+        border: none;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    
+    
