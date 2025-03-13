@@ -91,12 +91,12 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="relato" class="form-label">Relato do funcionário</label>
+                                        <label for="relato" class="form-label" id= "relatoFuncionario">Relato do funcionário</label>
                                         <textarea class="form-control" id="relato" rows="2" required></textarea>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="conduta" class="form-label">Arquivo 'opcional'</label>
+                                        <label for="conduta" class="form-label" id="arquivoCSV">Arquivo 'opcional'</label>
                                         <input type="text" class="form-control" id="conduta" required>
                                     </div>
 
@@ -266,8 +266,30 @@
         function criarOcorrencia() {
             const horarioClique = new Date();
             const matricula = matriculaAluno.value
+            const relatoFuncionario = document.getElementById("relatoFuncionario")
+            const arquivo = document.getElementById("arquivoCSV")
+
             console.log("Horário do clique:", horarioClique);
             console.log("MAtricula do aluno selecionada : ", matricula)
+
+                console.log(`🔹 Matricula ${ocorrencia}:`);
+
+                fetch("/ocorrencias", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        matricula: vetorMatriculas,
+                        horario: horarioClique,
+                        descricao: relatoFuncionario,
+                        arquivo:arquivo
+                    }),
+                })
+                    .then(response => response.json())
+                    .then(data => console.log("Enviado com sucesso:", data))
+                    .catch(error => console.error("Erro ao enviar:", error));
+            
         }
 
 
