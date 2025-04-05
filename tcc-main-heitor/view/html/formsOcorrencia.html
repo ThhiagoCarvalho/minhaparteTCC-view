@@ -123,7 +123,22 @@
         </header>
     </main>
 
-
+    <div class="modal fade" id="modalMatriculas" tabindex="-1" aria-labelledby="modalMatriculasLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalMatriculasLabel">Matrículas Adicionadas</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+              <ul id="listaMatriculas" class="list-group"></ul>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+          </div>
+        </div>
+      </div>
     <script>
         /*codigo para o menu do site */
         const menuDiv = document.getElementById("menu-mobile")
