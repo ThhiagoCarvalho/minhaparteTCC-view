@@ -18,18 +18,20 @@
 .menu-desktop {
     text-align: center;
     height: 100vh;
-    padding: 20px;
+    padding-top: 20px;
     background-color: #00488B;
 }
 
 
 .menu-desktop nav ul li {
     padding: 7px;
+    
 }
 
 
 header .menu-desktop nav ul {
     list-style-type: none;
+    padding: 5px;
 }
 
 header .menu-desktop nav ul li a {

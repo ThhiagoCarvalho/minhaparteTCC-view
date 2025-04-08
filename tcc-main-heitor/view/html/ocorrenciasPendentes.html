@@ -114,7 +114,9 @@
                     <ul id="listaMatriculas" class="list-group"></ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+    
+                    <button type="button" id="AbrirForms" class="btn btn-success">Abrir Forms</button>
                 </div>
             </div>
         </div>
@@ -131,7 +133,14 @@
         ];
         const menuDiv = document.getElementById("menu-mobile")
         const btnAnimar = document.getElementById("btn-menu")
+        const buttonAbrirForms = document.getElementById("AbrirForms")
+        buttonAbrirForms.onclick = function () {
+            abrirForms()
+        }
 
+        function abrirForms() {
+            window.location = "formsOcorrencia.html";
+        }
         btnAnimar.addEventListener('click', animarMenu)
         function animarMenu() {
             menuDiv.classList.toggle('abrir')
