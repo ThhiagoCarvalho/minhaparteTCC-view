@@ -257,7 +257,7 @@
         async function carregarFuncionarios(pagina = 1) {
             try {
                 mostrarSpinner(true);
-                const uri_post_perfil = `/alunos/buscar/${pagina}`;
+                const uri_post_perfil = `/alunos/buscarPagina/${pagina}`;
                 fetch(uri_post_perfil, {
                     method: "GET",
                     headers: {
@@ -418,7 +418,7 @@
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                    "Authorization": 'Bearer ' + token
+                  //  "Authorization": 'Bearer ' + token
                 }
             }).then(res => res.json())
                 .then(data => {
@@ -460,14 +460,14 @@
             const arquivo = inputArquivo.files[0];
             formData.append("variavelArquivo", arquivo);
 
-            const uri_post_alunos_arquivo = "/aluno/upload";
+            const uri_post_alunos_arquivo = "/aluno/csv";
 
             fetch(uri_post_alunos_arquivo, {
                 method: "POST",
                 body: formData,
                 headers: {
                     "Accept": "application/json",
-                    "Authorization": 'Bearer ' + token
+                   // "Authorization": 'Bearer ' + token
                 }
             }).then(res => res.json())
                 .then(data => {
