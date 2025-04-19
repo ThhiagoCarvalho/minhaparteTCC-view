@@ -49,10 +49,10 @@ module.exports = class RouterFuncionario {
         //esta funcao vai ser para buscar os dados do aluno tipo buscar perfil do projeto do estagio
 
     this._router.get('/buscarPerfil/:id',
-        this._controleAluno.controle_aluno_get_perfil
+        this._controleFuncionario.controle_funcionario_get_perfil
       );
 
-      
+
         return this._router
 
     }
