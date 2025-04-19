@@ -96,23 +96,128 @@ module.exports = class controlAluno {
     response.status(200).send(objResposta);
 
   }
-  async controle_aluno_getAluno (request , response)  {
-    const objAluno = new Aluno()
-    objAluno.matricula = request.params.matricula
-    const existeAluno =  await objAluno.getAluno ( )
-    if (existeAluno)  { 
-      const objResposta = {
-        nome : objAluno.nome,
-        turma : objAluno.turma
-      }
-      response.status(200).send(objResposta);
 
-    }else { 
-      const objResposta = {
-        msg  : "Nao existe este aluno"
-      }
-      response.status(404).send(objResposta);
+
+  async controle_aluno_put(req, res) {
+    try {
+        const matricula = req.body.matricula;
+        const nome = req.body.nome;
+        const turma = req.body.turma;
+        const nascimento = req.body.nascimento;
+
+        const objAluno = new Aluno();
+        objAluno.matricula(matricula);
+        objAluno.nome(nome);
+        objAluno.turma(turma);
+        objAluno.nascimento(nascimento);
+
+        const sucesso = await objAluno.update();
+
+        const resposta = {
+            resposta: sucesso ? "Aluno atualizado com sucesso" : "Aluno não encontrado ou sem alteração",
+            status: sucesso
+        };
+
+        res.status(sucesso ? 200 : 404).send(resposta);
+    } catch (error) {
+        console.log("Erro >>>", error);
+        res.status(500).send({ resposta: "Erro interno", status: false });
     }
+}
+
+
+async controle_aluno_delete(req, res) {
+  try {
+      const matricula = req.body.matricula;
+
+      const objAluno = new Aluno();
+      objAluno.matricula(matricula);
+
+      const sucesso = await objAluno.delete();
+
+      const resposta = {
+          resposta: sucesso ? "Aluno deletado com sucesso" : "Aluno não encontrado",
+          status: sucesso
+      };
+
+      res.status(sucesso ? 200 : 404).send(resposta);
+  } catch (error) {
+      console.log("Erro >>>", error);
+      res.status(500).send({ resposta: "Erro interno", status: false });
   }
+}
+
+async controle_aluno_post(req, res) {
+  try {
+      const matricula = req.body.matricula;
+      const nome = req.body.nome;
+      const turma = req.body.turma;
+      const nascimento = req.body.nascimento;
+
+      const objAluno = new Aluno();
+      objAluno.matricula(matricula);
+      objAluno.nome(nome);
+      objAluno.turma(turma);
+      objAluno.nascimento(nascimento);
+
+      const sucesso = await objAluno.cadastro();
+
+      const resposta = {
+          resposta: sucesso ? "Aluno cadastrado com sucesso" : "Erro ao cadastrar aluno",
+          status: sucesso
+      };
+
+      res.status(sucesso ? 201 : 400).send(resposta);
+  } catch (error) {
+      console.log("Erro >>>", error);
+      res.status(500).send({ resposta: "Erro interno", status: false });
+  }
+}
+
+
+async controle_aluno_get_page(req, res) {
+  try {
+      const pagina = parseInt(req.params.id);
+
+      const objAluno = new Aluno();
+      const alunos = await objAluno.ReadPage(pagina);
+
+      const resposta = {
+          resposta: "Alunos encontrados com sucesso",
+          dados: alunos,
+          status: true
+      };
+
+      res.status(200).send(resposta);
+  } catch (error) {
+      console.log("Erro >>>", error);
+      res.status(500).send({ resposta: "Erro interno", status: false });
+  }
+}
+
+
+//esta funcao vai ser para buscar os dados do aluno tipo buscar perfil do projeto do estagio
+async controle_aluno_get_perfil(req, res) {
+  try {
+      const id = req.params.id;
+
+      const objAluno = new Aluno();
+      objAluno.id  = id
+      const alunos = await objAluno.getAluno();
+
+      const resposta = {
+          resposta: "Aluno encontrado com sucesso",
+          dados: alunos,
+          status: true
+      };
+
+      res.status(200).send(resposta);
+  } catch (error) {
+      console.log("Erro >>>", error);
+      res.status(500).send({ resposta: "Erro interno", status: false });
+  }
+}
+
+
 
 };

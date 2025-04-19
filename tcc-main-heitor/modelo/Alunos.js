@@ -12,7 +12,7 @@ module.exports = class Aluno {
     async getAluno() {
         const conexao = Banco.getConexao();
         console.log(this.matricula);
-        const mysql = "SELECT matricula, nome, turma FROM Aluno WHERE matricula = ?";
+        const mysql = "SELECT * FROM Aluno WHERE matricula = ?";
     
         try {
             const [result] = await conexao.promise().execute(mysql, [this._matricula]);
@@ -56,6 +56,75 @@ module.exports = class Aluno {
             console.log("Erro >>" + error);
         }
     }
+
+    async update() {
+        const conexao = Banco.getConexao();
+        const sql = `UPDATE Aluno 
+                     SET nome = ?, turma = ?, nascimento = ?
+                     WHERE matricula = ?`;
+    
+        try {
+            const [result] = await conexao.promise().execute(sql, [
+                this._nome,
+                this._turma,
+                this._nascimento,
+                this._matricula
+            ]);
+            return result.affectedRows > 0;
+        } catch (error) {
+            console.log("Erro ao atualizar aluno >> " + error);
+        }
+    }
+
+
+    async delete() {
+        const conexao = Banco.getConexao();
+        const sql = "DELETE FROM Aluno WHERE matricula = ?";
+    
+        try {
+            const [result] = await conexao.promise().execute(sql, [this._matricula]);
+            return result.affectedRows > 0;
+        } catch (error) {
+            console.log("Erro ao deletar aluno >> " + error);
+        }
+    }
+    
+    async ReadPage(pagina) {
+        let itensPorPagina = 10;
+        let inicio = (pagina - 1) * itensPorPagina;
+    
+        const conexao = Banco.getConexao();
+        const sql = `SELECT * FROM Aluno LIMIT ${inicio} , ${itensPorPagina}`;
+    
+        try {
+            const [rows] = await conexao.promise().execute(sql);
+            return rows;
+        } catch (error) {
+            console.log("Erro ao buscar alunos paginados >> " + error);
+            return [];
+        }
+    }
+    
+    async cadastro() {
+        const conexao = Banco.getConexao();
+    
+        const mysql = "INSERT INTO Aluno (matricula, nome, turma, nascimento) VALUES (?, ?, ?, ?)";
+    
+        let matricula = this._matricula;
+        let nome = this._nome;
+        let turma = this._turma;
+        let nascimento = this._nascimento;
+    
+        try {
+            const [result] = await conexao.promise().execute(mysql, [matricula, nome, turma, nascimento]);
+            return result.affectedRows > 0;
+        } catch (error) {
+            console.log("Erro ao cadastrar aluno >> " + error);
+            return false;
+        }
+    }
+    
+    
     
 
     get matricula() {

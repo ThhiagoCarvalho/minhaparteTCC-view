@@ -43,6 +43,82 @@ module.exports = class Funcionario {
             console.log("Erro >>" + error);
         }
     }
+
+    async ReadPage(pagina) {
+        let itensPorPagina = 10;
+        let inicio = (pagina - 1) * itensPorPagina;
+    
+        const conexao = Banco.getConexao();
+        const sql = `SELECT * FROM Funcionario LIMIT ${inicio} , ${itensPorPagina}`;
+    
+        try {
+            const [rows] = await conexao.promise().execute(sql);
+            return rows;
+        } catch (error) {
+            console.log("Erro ao buscar funcionários paginados >> " + error);
+            return [];
+        }
+    }
+
+    
+    async update() {
+        const conexao = Banco.getConexao();
+        const sql = `UPDATE Funcionario 
+                     SET nome = ?, cpf = ?, senha = ?, TipoFuncionario_idTipoFuncionario = ?
+                     WHERE registro = ?`;
+    
+        try {
+            const [result] = await conexao.promise().execute(sql, [
+                this._nome,
+                this._cpf,
+                this._senha,
+                this._TipoFuncionario_idTipoFuncionario,
+                this._registro
+            ]);
+            return result.affectedRows > 0;
+        } catch (error) {
+            console.log("Erro ao atualizar funcionário >> " + error);
+        }
+    }
+    
+
+    async delete() {
+        const conexao = Banco.getConexao();
+        const sql = "DELETE FROM Funcionario WHERE registro = ?";
+    
+        try {
+            const [result] = await conexao.promise().execute(sql, [this._registro]);
+            return result.affectedRows > 0;
+        } catch (error) {
+            console.log("Erro ao deletar funcionário >> " + error);
+        }
+    }
+    
+
+    
+    async cadastro() {
+        const conexao = Banco.getConexao();
+    
+        const mysql = "INSERT INTO Funcionario (registro, nome, cpf, senha, TipoFuncionario_idTipoFuncionario) VALUES (?, ?, ?, ?, ?)";
+    
+        let registro = this._registro;
+        let nome = this._nome;
+        let cpf = this._cpf;
+        let senha = this._senha;
+        let tipo = this._TipoFuncionario_idTipoFuncionario;
+    
+        try {
+            const [result] = await conexao.promise().execute(mysql, [registro, nome, cpf, senha, tipo]);
+            return result.affectedRows > 0;
+        } catch (error) {
+            console.log("Erro ao cadastrar funcionário >> " + error);
+            return false;
+        }
+    }
+    
+    
+
+
     get registro() {
         return this._registro;
     }
