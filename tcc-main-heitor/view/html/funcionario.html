@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Funcionarios</title>
+    <link rel="stylesheet" href="../css/crud.css">
+
+    <!-- fontes das letras -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- BOOTSTRAP CSS e JS (um único conjunto) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</head>
+
+<body>
+
+    <main>
+        <header>
+            <div class="wrapper"> <!-- Novo wrapper para separar o menu -->
+
+                <div class="menu-desktop">
+                    <button onclick="abrirmenu()" id="btn-menu">
+                        <span class="linha"></span>
+                        <span class="linha"></span>
+                        <span class="linha"></span>
+                    </button>
+                    <nav>
+                        <ul>
+                            <li><a href="../html/estatistica.html">Estatistica</a></li>
+                            <li><a href="../html/configuracaoCoordenacao.html">Configuracao</a></li>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+
+                <div class="menu-mobile" id="menu-mobile">
+                    <nav>
+                        <ul>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">home</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+
+                <div class="container">
+
+                    <div class="container mt-4">
+                        <h2>Listagem dos Alunos</h2>
+                        <table id="TabelaFuncionario" class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Registro</th>
+                                    <th>Nome</th>
+                                    <th>Cpf</th>
+                                    <th>Cargo</th>
+                                </tr>
+                            </thead>
+                            <!-- O <tbody> será criado dinamicamente -->
+                        </table>
+
+                        <div id="spinnerContainer" style="display: none;">
+                            <div class="spinner-border text-primary" role="status" style="margin: auto;">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                        </div>
+
+
+                        <div class="d-flex justify-content-center align-items-center gap-3 mt-4">
+                            <button id="btnAnterior" class="btn btn-outline-secondary"
+                                onclick="paginaAnterior()">←Anterior</button>
+
+                            <nav>
+                                <ul class="pagination mb-0">
+                                    <li class="page-item active"><span class="page-link" id="numPagina">1</span>
+                                    </li>
+                                </ul>
+                            </nav>
+
+                            <button id="btnProximo" class="btn btn-outline-secondary" onclick="proximaPagina()">Próxima
+                                →</button>
+                        </div>
+
+                        <div class="mt-5">
+                            <h5>Cadastro de Funcionarios</h5>
+                            <button class="btn btn-primary mb-3" data-bs-toggle="modal"
+                                data-bs-target="#modalCadastroFuncionario">
+                                Cadastrar Manualmente
+                            </button>
+
+                            <!-- Cadastro via arquivo -->
+                            <h6>Ou envie uma planilha</h6>
+                            <form id="formUploadArquivo" enctype="multipart/form-data">
+                                <div class="row g-2 align-items-center">
+                                    <div class="col-md-6">
+                                        <input type="file" id="variavelArquivo" class="form-control" accept=".json,.csv"
+                                            required>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit" class="btn btn-secondary" id="CadastroFuncionarioArquivo">Enviar
+                                            Arquivo</button>
+                                    </div>
+                                    <div id="error-message_post_arquivo" class="text-danger" style="display: none;">
+                                    </div>
+                                    <div id="sucess-message_post_arquivo" class="text-sucess" style="display: none;">
+                                    </div>
+
+
+
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                    <!-- Modal de Atualização -->
+
+
+                    <div class="modal fade" id="modalEdicaoFuncionario" tabindex="-1"
+                    aria-labelledby="modalEditarFuncionarioLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                
+                            <form id="formAtualizarFuncionario">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalEditarFuncionarioLabel">Atualizar Funcionário</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Fechar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" id="registro">
+                                    <div class="row g-2">
+                                        <div class="col-md-6">
+                                            <input type="text" id="nome" class="form-control"
+                                                placeholder="Nome do Funcionário" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" id="cpf" class="form-control"
+                                                placeholder="CPF" required>
+                                        </div>
+                                        <div class="col-md-6 mt-2">
+                                            <input type="password" id="senha" class="form-control"
+                                                placeholder="Senha" required>
+                                        </div>
+                                        <div class="col-md-6 mt-2">
+                                            <input type="number" id="tipoFuncionario" class="form-control"
+                                                placeholder="ID Tipo Funcionário" required>
+                                        </div>
+                                        <div id="error-message" class="text-danger mt-2" style="display: none;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary"
+                                        id="botaoAtualizarFuncionario">Atualizar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                    <!-- Modal -->
+                </div>
+            </div>
+            </div>
+            </div>
+            </div>
+        </header>
+    </main>
+
+    <!-- Modal de Cadastro Manual -->
+
+
+    <div class="modal fade" id="modalCadastroFuncionario" tabindex="-1"
+    aria-labelledby="modalCadastroFuncionarioLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="formCadastroFuncionario">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCadastroFuncionarioLabel">Cadastro de Funcionário</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-2">
+                        <div class="col-md-6">
+                            <input type="text" id="registroPost" class="form-control"
+                                placeholder="Registro" required>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" id="nomePost" class="form-control"
+                                placeholder="Nome do Funcionário" required>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <input type="text" id="cpfPost" class="form-control"
+                                placeholder="CPF" required>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <input type="password" id="senhaPost" class="form-control"
+                                placeholder="Senha" required>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <input type="number" id="tipoFuncionarioPost" class="form-control"
+                                placeholder="ID Tipo Funcionário" required>
+                        </div>
+                        <div id="error-message_post" class="text-danger mt-2" style="display: none;"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success"
+                        id="CadastroFuncionario">Cadastrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+        let paginaAtual = 1;
+        const itensPorPagina = 5;
+        let ultimaPagina = false;
+        /*codigo para o menu do site */
+        const menuDiv = document.getElementById("menu-mobile")
+        const btnAnimar = document.getElementById("btn-menu")
+        const TabelaFuncionario = document.getElementById("TabelaFuncionario")
+        const forms = document.getElementById("container-wrapper")
+
+        // const usuario = JSON.parse(localStorage.getItem("Funcionario"));
+        // const token = usuario.token
+
+        const mensage_error = document.getElementById("error-message");
+        const botaoAtualizar = document.getElementById("botaoAtualizar")
+
+        const botaoCadastro = document.getElementById("CadastroFuncionario")
+        const mensage_error_post = document.getElementById("error-message_post");
+
+        const botaoCadastroArquivo = document.getElementById("CadastroFuncionarioArquivo")
+        const mensage_error_arquivo = document.getElementById("error-message_post_arquivo");
+        const mensage_sucess_arquivo = document.getElementById("sucess-message_post_arquivo");
+
+
+
+        async function carregarFuncionarios(pagina = 1) {
+            try {
+                mostrarSpinner(true);
+                const uri_post_perfil = `/funcionarios/buscar/${pagina}`;
+                fetch(uri_post_perfil, {
+                    method: "GET",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        "Authorization": 'Bearer ' + token
+                    }
+                }).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    console.log(data)
+                    if (data.status) {
+                        montarTabelaOpcao(data);
+                        paginaAtual = pagina;
+                        document.getElementById("numPagina").textContent = paginaAtual;
+
+
+                    } else {
+                        alert("Erro ao carregar funcionários.");
+                    }
+                })
+            } catch (erro) {
+                console.error("Erro na requisição:", erro);
+            } finally {
+                mostrarSpinner(false);
+            }
+        }
+
+        function proximaPagina() {
+            if (!ultimaPagina) {
+                carregarFuncionarios(paginaAtual + 1);
+            }
+        }
+
+        function paginaAnterior() {
+            console.log('Botão anterior clicado');
+
+            if (paginaAtual > 1) {
+                carregarFuncionarios(paginaAtual - 1);
+            }
+        }
+
+        function mostrarSpinner(mostrar) {
+            const spinner = document.getElementById("spinnerContainer");
+            spinner.style.display = mostrar ? "block" : "none";
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            carregarFuncionarios(paginaAtual);
+        });
+
+
+
+        function formatarData(dataISO) {
+            const data = new Date(dataISO);
+            return data.toLocaleDateString('pt-BR', {
+                timeZone: 'UTC'
+            });
+        }
+
+
+
+
+        function montarTabelaOpcao(objJson_get) {
+            let tbody = TabelaFuncionario.querySelector("tbody");
+
+            if (!tbody) {
+                tbody = document.createElement("tbody");
+                TabelaFuncionario.appendChild(tbody);
+            }
+
+            tbody.innerHTML = '';
+            if (objJson_get.status == false) {
+                mensage_error.textContent = "Sem resultados"
+                mensage_error.style = "block";
+            } else {
+                console.log(objJson_get)
+                mensage_error.style = "display: none";
+
+                objJson_get.dados.forEach(dados_get => {
+                    const linhaTabela = document.createElement('tr')
+                    const colunas = [
+                        dados_get.registro,
+                        dados_get.nome,
+                        dados_get.cpf,
+                        dados_get.TipoFuncionario_idTipoFuncionario,
+                    ];
+
+
+                    colunas.forEach(valor => {
+                        const colunaTabela = document.createElement('td')
+                        colunaTabela.textContent = valor
+                        linhaTabela.append(colunaTabela)
+                    });
+
+                    const colunaBotaoOpcao = document.createElement('td'); // Criando uma nova coluna para o botão
+                    const btnExcluirFuncionario = document.createElement('button')
+                    const btnAtualizarFuncionario = document.createElement('button')
+
+
+                    btnAtualizarFuncionario.textContent = 'Atualizar'; // Definindo o texto do botão
+                    btnAtualizarFuncionario.classList.add('botao-tabela', 'btn-atualizar');
+
+                    btnExcluirFuncionario.textContent = 'Excluir'; // Definindo o texto do botão
+                    btnExcluirFuncionario.classList.add('botao-tabela', 'btn-excluir');
+
+                    colunaBotaoOpcao.appendChild(btnAtualizarFuncionario);
+                    colunaBotaoOpcao.appendChild(btnExcluirFuncionario);
+
+                    linhaTabela.append(colunaBotaoOpcao)
+
+                    tbody.appendChild(linhaTabela);
+
+                    const obj = objJson_get
+                    console.log(dados_get)
+
+                    btnAtualizarFuncionario.onclick = function (event) {
+                        event.preventDefault();
+
+                
+                        // Preenche os dados no formulário
+                        document.getElementById("registro").value = dados_get.registro;
+                        document.getElementById("nome").value = dados_get.nome;
+                        document.getElementById("cpf").value = dados_get.cpf;
+                        document.getElementById("tipo").value = dados_get.TipoFuncionario_idTipoFuncionario;
+
+                        // Abre o modal
+                        const modal = new bootstrap.Modal(document.getElementById('modalEdicaoFuncionario'));
+                        modal.show();
+                    }
+
+                    btnExcluirFuncionario.onclick = function (event) {
+                        event.preventDefault();
+
+                        if (confirm("Tem certeza que deseja excluir este funcionario?")) {
+                            deletarFuncionario(dados_get.registro);
+                        }
+                    }
+
+                });
+
+                TabelaFuncionario.appendChild(tbody);
+                TabelaFuncionario.style.display = "block";
+            }
+        }
+
+
+
+        function deletarFuncionario(registro) {
+            const uri_delete_funcionarios= `/funcionarios/${registro}`;
+
+            fetch(uri_delete_funcionarios, {
+                method: "DELETE",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                  //  "Authorization": 'Bearer ' + token
+                }
+            }).then(res => res.json())
+                .then(data => {
+                    if (data.status == false) {
+                        console.log(data)
+                        alert("Erro ao deletar");
+                        return;
+                    } else {
+                        alert("Funcionario deletado com sucesso!");
+                        location.reload();
+                    }
+                }).catch(err => {
+                    alert("Erro ao enviar arquivo.");
+                    console.error(err);
+                });
+
+        }
+
+        const formUploadArquivo = document.getElementById("formUploadArquivo");
+
+        formUploadArquivo.addEventListener("submit", function (e) {
+            e.preventDefault(); // Impede recarregamento automático
+            cadastro_funcionario_arquivo();
+        });
+
+
+
+
+
+        function cadastro_funcionario_arquivo() {
+            const inputArquivo = document.getElementById("variavelArquivo");
+            if (!inputArquivo || !inputArquivo.files || inputArquivo.files.length === 0) {
+                mensage_error_arquivo.textContent = "Selecione um arquivo antes de enviar.";
+                mensage_error_arquivo.style.display = "block";
+                return;
+            }
+
+            const formData = new FormData();
+            const arquivo = inputArquivo.files[0];
+            formData.append("variavelArquivo", arquivo);
+
+            const uri_post_funcionarios_arquivo = "/funcionarios/upload";
+
+            fetch(uri_post_funcionarios_arquivo, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "Accept": "application/json",
+                 //   "Authorization": 'Bearer ' + token
+                }
+            }).then(res => res.json())
+                .then(data => {
+                    if (data.status == false) {
+                        mensage_error_arquivo.textContent = data.msg || "Erro no upload.";
+                        mensage_error_arquivo.style.display = "block";
+                        return
+                    } else {
+                        mensage_sucess_arquivo.textContent =
+                            `Funcionarios duplicados: ${data.nomes_duplicados || "0"} | ` +
+                            `Duplicados: ${data.duplicados || "0"} | ` +
+                            `Processados: ${data.processados || "0"}`;
+                        console.log(mensage_sucess_arquivo)
+
+                        mensage_sucess_arquivo.style.display = "block";
+                    }
+                }).catch(err => {
+                    alert("Erro ao enviar arquivo.");
+                    console.error(err);
+                });
+        }
+
+
+
+        botaoCadastro.onclick = function () {
+            event.preventDefault(); // impede o comportamento padrão
+
+            post_funcionarios()
+        }
+        function post_funcionarios() {
+
+    
+            const nome = document.getElementById('nomePost').value;
+            const cpf = document.getElementById('cpfPost').value;
+            const cargo = document.getElementById('TipoFuncionario_idTipoFuncionarioPost').value;
+
+            const jsonEnvio = {
+                "nome": nome,
+                "cpfPost": cpf,
+                "TipoFuncionario_idTipoFuncionarioPost": cargo,
+            }
+
+
+            const uri_post_funcionarios = `/funcionarios/`;
+            fetch(uri_post_funcionarios, {
+                method: "POST",
+                body: JSON.stringify(jsonEnvio),
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    // "Authorization": 'Bearer ' + token
+                }
+            }).then((response) => {
+                return response.json();
+            }).then((data) => {
+                console.log(data)
+                if (data.status == false) {
+                    let txt = data.msg
+                    mensage_error_post.textContent = txt
+                    mensage_error_post.style.display = "block";
+                    return;
+                } else {
+                    mensage_error_post.style.display = "none";
+
+                    botaoCadastro.textContent = "Cadastrado!";
+                    botaoCadastro.classList.add("sucesso");
+                    setTimeout(() => {
+                        botaoCadastro.textContent = "Cadastrar";
+                        botaoCadastro.classList.remove("sucesso");
+                    }, 2000); // 2000 milissegundos = 2 segundos               
+                }
+
+            }).catch((error) => {
+                console.error("Error:", error);
+            })
+        }
+
+
+
+        botaoAtualizar.onclick = function () {
+            event.preventDefault(); // impede o comportamento padrão
+
+            update_funcionario()
+        }
+        function update_funcionario() {
+            const registro = document.getElementById('registro').value
+            const nome = document.getElementById('nome').value;
+            const cpf = document.getElementById('cpf').value;
+            const cargo = document.getElementById('TipoFuncionario_idTipoFuncionario').value;
+
+
+
+            mensage_error.style.display = "none";
+            const jsonEnvio = {
+                "nome": nome,
+                "cpfPost": cpf,
+                "TipoFuncionario_idTipoFuncionarioPost": cargo,
+            }
+
+
+            const uri_update_funcionarios = `/alunos/${registro}`;
+            fetch(uri_update_funcionarios, {
+                method: "PUT",
+                body: JSON.stringify(jsonEnvio),
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    // "Authorization": 'Bearer ' + token
+                }
+            }).then((response) => {
+                return response.json();
+            }).then((data) => {
+                console.log(data)
+
+                if (data.status == false) {
+                    let txt = data.msg
+                    mensage_error.textContent = txt
+                    mensage_error.style.display = "block";
+                } else {
+                    botaoAtualizar.textContent = "Atualizado!";
+                    botaoAtualizar.classList.add("sucesso");
+                    setTimeout(() => {
+                        botaoAtualizar.textContent = "Atualizar";
+                        botaoAtualizar.classList.remove("sucesso");
+                    }, 2000); // 2000 milissegundos = 2 segundos               
+                }
+
+            }).catch((error) => {
+                console.error("Error:", error);
+            })
+
+        }
+
+
+
+        btnAnimar.addEventListener('click', animarMenu)
+        function animarMenu() {
+            menuDiv.classList.toggle('abrir')
+            btnAnimar.classList.toggle('ativo')
+
+            forms.style.display = "none";
+
+            if (menuDiv.classList.contains('abrir')) {
+                forms.style.display = "none"; // Esconde o formulário
+            } else {
+                forms.style.display = "flex"; // Mostra o formulário novamente
+            }
+        }
+
+
+
+        function toggleSubmenu(event) {
+            event.preventDefault();
+            const item = event.target.closest('.submenu');
+            item.classList.toggle('open');
+        }
+
+
+    </script>
+
+</body>
+
+</html>
