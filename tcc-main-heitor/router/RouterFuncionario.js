@@ -27,8 +27,11 @@ module.exports = class RouterFuncionario {
         )
 
         this._router.post('/', 
+            this._middleFuncionario.validar_nome,
+            this._middleFuncionario.validar_registro,
             this._middleFuncionario.validar_cpf,
             this._middleFuncionario.validar_senha,
+            
             this._middleFuncionario.verificarFuncionarioNaoExistente,
             this._controleFuncionario.controle_funcionario_post
         )
@@ -42,7 +45,7 @@ module.exports = class RouterFuncionario {
 
         this._router.put('/:registro', 
             this._middleFuncionario.validar_nome,
-            this._middleFuncionario.validar_cpf,
+            this._middleFuncionario.verificarCpfDuplicado,
             this._middleFuncionario.validar_senha,
             this._middleFuncionario.verificarFuncionarioExistente2,
             this._controleFuncionario.controle_funcionario_put
@@ -51,14 +54,6 @@ module.exports = class RouterFuncionario {
         this._router.get('/buscarPagina/:id', 
             this._controleFuncionario.controle_funcionario_get_page
         )
-
-
-        //esta funcao vai ser para buscar os dados do aluno tipo buscar perfil do projeto do estagio
-
-    this._router.get('/buscarPerfil/:id',
-        this._controleFuncionario.controle_funcionario_get_perfil
-      );
-
 
         return this._router
 

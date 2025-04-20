@@ -7,6 +7,8 @@ module.exports = class Aluno {
         this._nome = ""
         this._turma = ""
         this._nascimento = null
+        this._curso = ""
+
     }
 
     async getAluno() {
@@ -58,9 +60,10 @@ module.exports = class Aluno {
     }
 
     async update() {
+        console.log("CURSO" + this.curso)
         const conexao = Banco.getConexao();
         const sql = `UPDATE Aluno 
-                     SET nome = ?, turma = ?, nascimento = ?
+                     SET nome = ?, turma = ?, nascimento = ?, curso = ?
                      WHERE matricula = ?`;
     
         try {
@@ -68,6 +71,8 @@ module.exports = class Aluno {
                 this._nome,
                 this._turma,
                 this._nascimento,
+                this.curso,
+
                 this._matricula
             ]);
             return result.affectedRows > 0;
@@ -108,15 +113,10 @@ module.exports = class Aluno {
     async cadastro() {
         const conexao = Banco.getConexao();
     
-        const mysql = "INSERT INTO Aluno (matricula, nome, turma, nascimento) VALUES (?, ?, ?, ?)";
-    
-        let matricula = this._matricula;
-        let nome = this._nome;
-        let turma = this._turma;
-        let nascimento = this._nascimento;
+        const mysql = "INSERT INTO Aluno (matricula, nome, turma, nascimento,curso) VALUES (?, ?, ?,?, ?)";
     
         try {
-            const [result] = await conexao.promise().execute(mysql, [matricula, nome, turma, nascimento]);
+            const [result] = await conexao.promise().execute(mysql, [this.matricula, this.nome, this.turma, this.nascimento,this.curso]);
             return result.affectedRows > 0;
         } catch (error) {
             console.log("Erro ao cadastrar aluno >> " + error);
@@ -149,6 +149,15 @@ module.exports = class Aluno {
     
     set turma(valor) {
         this._turma = valor;
+    }
+
+
+    get curso() {
+        return this._curso;
+    }
+    
+    set curso(valor) {
+        this._curso = valor;
     }
     
     get nascimento() {

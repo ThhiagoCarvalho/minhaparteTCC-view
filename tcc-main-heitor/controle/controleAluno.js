@@ -104,12 +104,15 @@ module.exports = class controlAluno {
         const nome = req.body.nome;
         const turma = req.body.turma;
         const nascimento = req.body.nascimento;
+        const curso = req.body.curso;
 
         const objAluno = new Aluno();
-        objAluno.matricula(matricula);
-        objAluno.nome(nome);
-        objAluno.turma(turma);
-        objAluno.nascimento(nascimento);
+        objAluno.matricula =matricula;
+        objAluno.nome= nome;
+        objAluno.turma =turma;
+        objAluno.nascimento=nascimento;
+        objAluno.curso=curso;
+
 
         const sucesso = await objAluno.update();
 
@@ -128,10 +131,10 @@ module.exports = class controlAluno {
 
 async controle_aluno_delete(req, res) {
   try {
-      const matricula = req.body.matricula;
+      const matricula = req.params.matricula;
 
       const objAluno = new Aluno();
-      objAluno.matricula(matricula);
+      objAluno.matricula = matricula;
 
       const sucesso = await objAluno.delete();
 
@@ -153,12 +156,16 @@ async controle_aluno_post(req, res) {
       const nome = req.body.nome;
       const turma = req.body.turma;
       const nascimento = req.body.nascimento;
+      const curso = req.body.curso;
+
 
       const objAluno = new Aluno();
-      objAluno.matricula(matricula);
-      objAluno.nome(nome);
-      objAluno.turma(turma);
-      objAluno.nascimento(nascimento);
+      objAluno.matricula = matricula;
+      objAluno.nome= nome;
+      objAluno.turma =turma;
+      objAluno.nascimento=nascimento;
+      objAluno.curso=curso;
+
 
       const sucesso = await objAluno.cadastro();
 

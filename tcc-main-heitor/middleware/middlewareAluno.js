@@ -108,21 +108,27 @@ module.exports = class MiddlewareAluno {
     next();
   }
 
-  validar_nascimento = (req, res, next) => {
-    const alunos = this.normalizarAlunos(req.body);
-    for (let i = 0; i < alunos.length; i++) {
-      const { nascimento } = alunos[i];
-      const identificador = alunos.length === 1 ? "" : `do aluno ${i + 1}`;
-      if (!nascimento || !/^\d{4}-\d{2}-\d{2}$/.test(nascimento)) {
-        return res.status(400).json({
-          cod: 5,
-          status: false,
-          msg: `A data de nascimento ${identificador} é inválida. Use o formato: AAAA-MM-DD.`,
-        });
-      }
+ validar_nascimento = (req, res, next) => { 
+  const alunos = this.normalizarAlunos(req.body);
+  
+  for (let i = 0; i < alunos.length; i++) {
+    const { nascimento } = alunos[i];
+    const identificador = alunos.length === 1 ? "" : `do aluno ${i + 1}`;
+    
+    // Verificar se a data está no formato aaaa-mm-dd
+    if (!nascimento || !/^\d{4}-\d{2}-\d{2}$/.test(nascimento)) {
+      return res.status(400).json({
+        cod: 5,
+        status: false,
+        msg: `A data de nascimento ${identificador} é inválida. Use o formato: AAAA-MM-DD.`,
+      });
     }
-    next();
   }
+
+  next();
+}
+
+  
 
   validar_curso = (req, res, next) => {
     const alunos = this.normalizarAlunos(req.body);
@@ -140,6 +146,46 @@ module.exports = class MiddlewareAluno {
     next();
   }
 
+
+  verificarMatriculaDuplicadaAluno = async (req, res, next) => {
+    const aluno = req.body; // O corpo da requisição já contém os dados do aluno
+    const matriculaAtual = req.params.matricula; // A matrícula está no params da URL (exemplo: /alunos/:matricula)
+  
+    const { matricula } = aluno; // A nova matrícula que vem no corpo da requisição
+  
+    if (!matricula) {
+      return res.status(400).json({
+        cod: 2,
+        status: false,
+        msg: `A matrícula é obrigatória.`,
+      });
+    }
+  
+    // Se a matrícula não foi alterada (comparando a matrícula enviada com a matrícula atual),
+    // não precisa fazer a verificação de duplicidade
+    if (matricula === matriculaAtual) {
+      return next(); // A matrícula não foi alterada, então segue o fluxo
+    }
+  
+    const objAluno = new Aluno();
+    objAluno.matricula = matricula;
+  
+    const alunoExistente = await objAluno.getAluno(); // Verifica se já existe aluno com essa matrícula
+  
+    if (alunoExistente) {
+      // Se for PUT (atualização), e a matrícula foi alterada, precisamos verificar se a nova matrícula já está em uso
+      return res.status(400).json({
+        cod: 3,
+        status: false,
+        msg: `A matrícula ${matricula} já está sendo usada por outro aluno.`,
+      });
+    }
+  
+    next();
+  };
+  
+  
+  
   validar_autenticacao = async (req, res, next) => {
     const objToken = new TokenJWT();
     const headers = req.headers['authorization'];

@@ -71,6 +71,7 @@ module.exports = class MiddlewareFuncionario {
 
     for (let i = 0; i < funcionarios.length; i++) {
       const { cpf } = funcionarios[i];
+      console.log("Cpf>" + cpf)
       const identificador = funcionarios.length === 1 ? "" : `do funcionário ${i + 1}`;
       const objFuncionario = new Funcionario();
       objFuncionario.cpf = cpf;
@@ -94,6 +95,56 @@ module.exports = class MiddlewareFuncionario {
     }
     next();
   }
+
+  
+  verificarCpfDuplicado  = async (req, res, next) => {
+    const funcionarios = this.normalizarFuncionarios(req.body);
+    const registro = req.params.registro; // id vindo da rota, por exemplo /funcionarios/:id
+
+    const regexCPF = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
+
+    for (let i = 0; i < funcionarios.length; i++) {
+      const { cpf } = funcionarios[i];
+      console.log("Cpf>" + cpf)
+      const identificador = funcionarios.length === 1 ? "" : `do funcionário ${i + 1}`;
+      const objFuncionario = new Funcionario();
+      objFuncionario.cpf = cpf;
+      objFuncionario.registro = registro;
+
+      const existeFuncionario = await objFuncionario.verificarFuncionario();
+
+      if (!cpf || !regexCPF.test(cpf)) {
+        return res.status(400).json({
+          cod: 2,
+          status: false,
+          msg: `O CPF ${identificador} é inválido. Use o formato: 000.000.000-00`,
+        });
+      }
+ 
+      
+      if (existeFuncionario) {
+        // Verifica se estamos tentando atualizar o mesmo funcionário
+        if (registro) {
+          if (existeFuncionario.registro != registro) {
+            return res.status(400).json({
+              cod: 3,
+              status: false,
+              msg: "O CPF já está sendo usado por outro funcionário."
+            });
+          }
+        } else {
+          // É uma criação (POST), e o CPF já existe
+          return res.status(400).json({
+            cod: 3,
+            status: false,
+            msg: "O CPF já está sendo usado."
+          });
+        }
+      }
+    }
+    next();
+  }
+
 
 
 

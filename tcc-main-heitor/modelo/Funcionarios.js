@@ -71,6 +71,11 @@ module.exports = class Funcionario {
             const [result] = await conexao.promise().execute(sql, [ this._nome,this._cpf,this._senha, this._TipoFuncionario_idTipoFuncionario, this._registro]);
             return result.affectedRows > 0;
         } catch (error) {
+            if (error.code === 'ER_DUP_ENTRY') {
+                throw new Error('CPF já está em uso');
+            
+            }
+          
             console.log("Erro ao atualizar funcionário >> " + error);
         }
     }
@@ -108,22 +113,23 @@ module.exports = class Funcionario {
 
     async verificarFuncionario() {
         const conexao = Banco.getConexao();
-    
-        const mysql = 'SELECT * FROM funcionarios WHERE  registro = ? OR cpf = ?'
+      
+        const mysql = 'SELECT * FROM funcionario WHERE registro = ? OR cpf = ?';
+        
         try {
-            const [result] = await conexao.promise().execute(mysql, [this.registro,this.cpf]);    
-            if (result.length > 0) {
-                return true;
-            } else {
-                return false
-            }
+          const [result] = await conexao.promise().execute(mysql, [this.registro, this.cpf]);
+          
+          if (result.length > 0) {
+            return result[0]; // Retorna o funcionário encontrado
+          } else {
+            return null; // Nenhum encontrado
+          }
         } catch (erro) {
-            console.error('Erro ao verificar funcionário:', erro);
-            throw erro;
+          console.error('Erro ao verificar funcionário:', erro);
+          throw erro;
         }
-    }
-    
-    
+      }
+      
 
 
     get registro() {

@@ -106,11 +106,11 @@ module.exports = class ControlFuncionario {
             const tipo = req.body.TipoFuncionario_idTipoFuncionario;
     
             const objFuncionario = new Funcionario();
-            objFuncionario.registro(registro);
-            objFuncionario.nome(nome);
-            objFuncionario.cpf(cpf);
-            objFuncionario.senha(senha);
-            objFuncionario.TipoFuncionario_idTipoFuncionario(tipo);
+            objFuncionario.registro = registro;
+            objFuncionario.nome = nome;
+            objFuncionario.cpf = cpf;
+            objFuncionario.senha = senha;
+            objFuncionario.TipoFuncionario_idTipoFuncionario = tipo;
     
             const sucesso = await objFuncionario.cadastro();
     
@@ -128,18 +128,18 @@ module.exports = class ControlFuncionario {
 
     async controle_funcionario_put(req, res) {
         try {
-            const registro = req.body.registro;
+            const registro = req.params.registro;
             const nome = req.body.nome;
             const cpf = req.body.cpf;
             const senha = req.body.senha;
             const tipo = req.body.TipoFuncionario_idTipoFuncionario;
     
             const objFuncionario = new Funcionario();
-            objFuncionario.registro(registro);
-            objFuncionario.nome(nome);
-            objFuncionario.cpf(cpf);
-            objFuncionario.senha(senha);
-            objFuncionario.TipoFuncionario_idTipoFuncionario(tipo);
+            objFuncionario.registro = registro;
+            objFuncionario.nome = nome;
+            objFuncionario.cpf = cpf;
+            objFuncionario.senha = senha;
+            objFuncionario.TipoFuncionario_idTipoFuncionario = tipo;
     
             const sucesso = await objFuncionario.update();
     
@@ -150,6 +150,9 @@ module.exports = class ControlFuncionario {
     
             res.status(sucesso ? 200 : 404).send(resposta);
         } catch (error) {
+            if (error.message === 'CPF já está em uso') {
+                return res.status(400).json({ msg: "CPF já está sendo usado por outro funcionário." });
+              }
             console.log("Erro >>>", error);
             res.status(500).send({ resposta: "Erro interno", status: false });
         }
@@ -157,10 +160,10 @@ module.exports = class ControlFuncionario {
     
     async controle_funcionario_delete(req, res) {
         try {
-            const registro = req.body.registro;
+            const registro = req.params.registro;
     
             const objFuncionario = new Funcionario();
-            objFuncionario.re(registro);
+            objFuncionario.registro = registro;
     
             const sucesso = await objFuncionario.delete();
     
