@@ -185,6 +185,31 @@ module.exports = class MiddlewareFuncionario {
   }
 
 
+  async verificarFuncionarioExistente2(req, res, next) {
+    try {
+      const registro = req.params.registro;
+
+      const objFuncionario = new Funcionario()
+      objFuncionario.registro = registro
+
+      const funcionarioExistente = await objFuncionario.verificarFuncionario();
+
+      if (!funcionarioExistente) {
+        return res.status(404).json({
+          error: 'Funcionario não encontrado.',
+          status: false
+        });
+      } else {
+        req.funcionario = objFuncionario
+        next()
+      }
+
+    } catch (error) {
+      console.error('Erro ao verificar aluno:', error);
+      res.status(500).json({ error: 'Erro interno do servidor.' });
+    }
+  }
+
 
   async verificarFuncionarioNaoExistente(req, res, next) {
     try {

@@ -19,18 +19,38 @@ module.exports = class RouterAluno {
     );
 
 
-    this._router.post('/login',
-      this._middleAluno.validarMatricula,
-      this._middleAluno.verificarAlunoExistente,
-      this._controleAluno.controle_aluno_login
-    );
-
 //serve para servir como as opcoes em baixo do input, aquelas caixas de matriculas prontas 
 
-    this._router.get('/matriculas/:matricula',
-      this._controleAluno.controle_aluno_getMatricula
+    this._router.post('/',
+      this._middleAluno.validar_matricula,
+      this._middleAluno.validar_nome,
+      this._middleAluno.validar_curso,
+      this._middleAluno.validar_nascimento,
+      this._middleAluno.validar_turma,
+      this._middleAluno.verificarAlunoNaoExistente,
+      this._controleAluno.controle_aluno_post
     );
 
+    
+    this._router.put('/:matricula',
+      this._middleAluno.validar_nome,
+      this._middleAluno.validar_curso,
+      this._middleAluno.validar_nascimento,
+      this._middleAluno.validar_turma,
+      this._middleAluno.verificarAlunoExistente,
+      this._controleAluno.controle_aluno_put
+    );
+
+    this._router.delete('/:matricula',
+      this._middleAluno.verificarAlunoExistente,
+      this._controleAluno.controle_aluno_delete
+    );
+
+
+    this._router.get('/:matricula',
+      this._middleAluno.verificarAlunoExistente,
+      this._controleAluno.controle_aluno_getMatricula
+    );
 
 
     this._router.get('/buscarPagina/:id',
@@ -39,7 +59,8 @@ module.exports = class RouterAluno {
 
 //esta funcao vai ser para buscar os dados do aluno tipo buscar perfil do projeto do estagio
 
-    this._router.get('/buscarPerfil/:id',
+    this._router.get('/buscarPerfil/:matricula',
+      this._middleAluno.verificarAlunoExistente,
       this._controleAluno.controle_aluno_get_perfil
     );
 

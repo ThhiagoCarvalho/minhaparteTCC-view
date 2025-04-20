@@ -87,7 +87,7 @@ module.exports = class controlAluno {
 
   async controle_aluno_getMatricula (request , response)  {
     const objAluno = new Aluno()
-    objAluno.matricula = request.params.matricula
+    objAluno.matricula = request.params.id
     const matricula =  await objAluno.getMatricula ( )
     console.log(matricula)
     const objResposta = {

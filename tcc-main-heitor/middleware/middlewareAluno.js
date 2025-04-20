@@ -154,7 +154,7 @@ module.exports = class MiddlewareAluno {
 
   async verificarAlunoExistente(req, res, next) {
     try {
-      const matricula = req.body.matricula;
+      const matricula = req.params.matricula;
       const objAluno = new Aluno();
       objAluno.matricula = matricula
       const alunoExistente = await objAluno.getAluno();
@@ -174,6 +174,9 @@ module.exports = class MiddlewareAluno {
       res.status(500).json({ error: 'Erro interno do servidor.' });
     }
   }
+
+
+  
 
   async verificarAlunoNaoExistente(req, res, next) {
     try {

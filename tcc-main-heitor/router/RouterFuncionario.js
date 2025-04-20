@@ -34,23 +34,23 @@ module.exports = class RouterFuncionario {
         )
 
 
-        this._router.delete('/:id', 
-            this._middleFuncionario.verificarFuncionarioExistente,
+        this._router.delete('/:registro', 
+            this._middleFuncionario.verificarFuncionarioExistente2,
             this._controleFuncionario.controle_funcionario_delete
         )
 
 
-        this._router.put('/:id', 
+        this._router.put('/:registro', 
+            this._middleFuncionario.validar_nome,
             this._middleFuncionario.validar_cpf,
             this._middleFuncionario.validar_senha,
-            this._middleFuncionario.verificarFuncionarioExistente,
+            this._middleFuncionario.verificarFuncionarioExistente2,
             this._controleFuncionario.controle_funcionario_put
         )
 
         this._router.get('/buscarPagina/:id', 
             this._controleFuncionario.controle_funcionario_get_page
         )
-
 
 
         //esta funcao vai ser para buscar os dados do aluno tipo buscar perfil do projeto do estagio
