@@ -22,12 +22,12 @@
     position: sticky;
     
     overflow-y: auto; 
-    background-color: #ffa040;
+    background-color:#00488B;
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
-    background-color: #ffa040;
+    background-color: #00488B;
     overflow-y: auto;
     z-index: 1000;
 }
@@ -135,7 +135,7 @@ header .menu-desktop nav ul li a {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #ffa040;
+    background-color: #00488B;
     transform: translateY(-100%);
     /* Esconde o menu fora da tela */
     transition: transform 0.5s ease, opacity 0.5s ease;
@@ -324,46 +324,6 @@ button.ativo {
     /* CORRETO */
 
 }
-.submenu {
-    position: relative;
-  }
-  
-  .submenu-list {
-    display: none;
-    flex-direction: column;
-    background-color: #ffa040;
-    position: absolute;
-    top: 100%;
-    font-size: 14px;
-    text-align: left;
-    min-width: 160px;
-    z-index: 2000;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .submenu-list li a {
-    color: #fff;
-    text-decoration: none;
-    display: block;
-  }
-  
-  .submenu-list li a:hover {
-    background-color: #ffa040;
-  }
-  
-  /* Mostrar submenu quando classe "open" for aplicada */
-  .submenu.open .submenu-list {
-    display: flex;
-  }
-  
-  /* Corrige o submenu no mobile para aparecer direitinho */
-  .menu-mobile .submenu-list {
-    position: static;
-    background-color: #ffa040;
-  }
-  
-
 
 
   .text-danger {
@@ -398,7 +358,7 @@ h2{
     margin-top: 10px;
 }
 
-#TabelaGetOpcao {
+#TabelaCrud {
     width: 75%;
     margin: auto;
     font-family: Arial, sans-serif;
@@ -407,12 +367,12 @@ h2{
     overflow: hidden;
 }
 
-#TabelaGetOpcao th, #TabelaGetOpcao td {
+#TabelaCrud th, #TabelaCrud td {
     padding: 12px 15px;
     text-align: left;
 }
 
-#TabelaGetOpcao th {
+#TabelaCrud th {
     font-weight: bold;
 }
 
