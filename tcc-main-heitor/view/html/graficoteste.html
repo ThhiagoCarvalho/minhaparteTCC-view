@@ -17,6 +17,7 @@
 
     <!-- Chart code -->
     <script>
+        var chart = am4core.create('chartdiv', am4charts.XYChart)
         am4core.ready(function () {
 
             // Themes begin
@@ -25,7 +26,6 @@
 
 
 
-            var chart = am4core.create('chartdiv', am4charts.XYChart)
             chart.colors.step = 2;
 
             chart.legend = new am4charts.Legend()
@@ -41,7 +41,7 @@
 
             var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
             yAxis.min = 0; // Define o mínimo do eixo Y
-            yAxis.max = 10; // Define o máximo (opcional, ajuste ao seu gráfico)
+            yAxis.max = 100000; // ajuste de acordo com a escala dos seus dados
             yAxis.strictMinMax = true; // Garante que o eixo use os limites definidos
             yAxis.renderer.grid.template.disabled = false; // Garante que as linhas da grade sejam exibidas
             yAxis.renderer.minGridDistance = 20; // Evita colisões entre rótulos
@@ -71,32 +71,16 @@
                     category: '1º bimestre',
                     ocorrencias: 3,
                     advertencias: 2,
-                    suspensao: 0
-                },
-                {
-                    category: '2º bimestre',
-                    ocorrencias: 2,
-                    advertencias: 1,
-                    suspensao: 1
-                },
-                {
-                    category: '3º bimestre',
-                    ocorrencias: 5,
-                    advertencias: 1,
-                    suspensao: 2
-                },
-                {
-                    category: '4º bimestre',
-                    ocorrencias: 0,
-                    advertencias: 7,
-                    suspensao: 1
+
                 }
             ]
 
 
-            createSeries('ocorrencias', 'ocorrência');
-            createSeries('advertencias', 'advertência');
-            createSeries('suspensao', 'suspensão');
+            createSeries('ocorrencias', 'Média Salarial');
+            createSeries('advertencias', 'Total Salarial');
+
+
+
 
             function arrangeColumns() {
 
@@ -136,11 +120,31 @@
                 }
             }
 
-        }); // end am4core.ready()
+        });
+
+        window.addEventListener("message", function (event) {
+            /*if (event.data.tipo === "dadosRelatorio") {
+                const dados = event.data.dados;
+
+                // Aqui você monta o chart.data com os dados recebidos
+                chart.data = dados.distribuicao_salarial_departamento.map(dep => ({
+                    category: dep.departamento,
+                    ocorrencias: parseFloat(dep.media_salarial), // ou total_funcionarios
+                    advertencias: parseFloat(dep.total_salarial), // ou deixar como 0 se não fizer sentido
+                }));
+
+
+                // Atualizar as séries se necessário
+             
+                chart.invalidateRawData();
+            }
+                   */
+        });
     </script>
 
     <!-- HTML -->
     <div id="chartdiv"></div>
+
 </body>
 
 </html>

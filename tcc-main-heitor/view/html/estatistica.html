@@ -96,11 +96,70 @@
 
 
     <script>
+        
+
+
         /*codigo para o menu do site */
         const menuDiv = document.getElementById("menu-mobile")
         const btnAnimar = document.getElementById("btn-menu")
         const forms = document.getElementById("container-wrapper")
 
+
+
+        /*
+                async function carregarRelatorio() {
+            try {
+                const uri_funcionarios_relatorios = "/funcionarios/relatorios/buscar";
+
+                fetch(uri_funcionarios_relatorios, {
+                    method: "GET",
+                    headers: {
+
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        "Authorization": 'Bearer ' + token
+                    }
+                }).then((response) => {
+                    return response.json();
+                }).then((data) => {
+
+                    if (data.status && data.relatorio) {
+                        const relatorio = data.relatorio;
+
+                        const mediaSalarial = parseFloat(relatorio.media_salarial_geral).toLocaleString('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL'
+                        });
+
+                        document.querySelector(".info-salario").textContent = mediaSalarial;
+                        document.querySelector(".info-qtd-funcionarios").textContent = relatorio.total_funcionarios;
+                        document.querySelector(".info-departamentos").textContent = relatorio.distribuicao_salarial_departamento.length;
+                        document.querySelector(".info-orcamento").textContent = relatorio.orcamento_total;
+
+                        const grafico1 = document.querySelector('iframe[src$="grafico.html"]');
+                        const grafico2 = document.querySelector('iframe[src$="grafico2.html"]');
+
+                        const payload = {
+                            tipo: "dadosRelatorio",
+                            dados: relatorio
+                        };
+
+                        grafico1.contentWindow.postMessage(payload, "*");
+                        grafico2.contentWindow.postMessage(payload, "*");
+                    } else {
+                        console.error("Erro ao obter relatório:", data.msg);
+                    }
+
+                })
+            } catch (erro) {
+                console.error("Erro na requisição do relatório:", erro);
+            }
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            carregarRelatorio();
+        })
+            */
         btnAnimar.addEventListener('click', animarMenu)
         function animarMenu() {
             menuDiv.classList.toggle('abrir')

@@ -68,13 +68,7 @@ module.exports = class Funcionario {
                      WHERE registro = ?`;
     
         try {
-            const [result] = await conexao.promise().execute(sql, [
-                this._nome,
-                this._cpf,
-                this._senha,
-                this._TipoFuncionario_idTipoFuncionario,
-                this._registro
-            ]);
+            const [result] = await conexao.promise().execute(sql, [ this._nome,this._cpf,this._senha, this._TipoFuncionario_idTipoFuncionario, this._registro]);
             return result.affectedRows > 0;
         } catch (error) {
             console.log("Erro ao atualizar funcionário >> " + error);
@@ -101,18 +95,31 @@ module.exports = class Funcionario {
     
         const mysql = "INSERT INTO Funcionario (registro, nome, cpf, senha, TipoFuncionario_idTipoFuncionario) VALUES (?, ?, ?, ?, ?)";
     
-        let registro = this._registro;
-        let nome = this._nome;
-        let cpf = this._cpf;
-        let senha = this._senha;
-        let tipo = this._TipoFuncionario_idTipoFuncionario;
-    
         try {
-            const [result] = await conexao.promise().execute(mysql, [registro, nome, cpf, senha, tipo]);
+            const [result] = await conexao.promise().execute(mysql, [this.registro, this.nome, this.cpf, this.senha, this.TipoFuncionario_idTipoFuncionario]);
             return result.affectedRows > 0;
         } catch (error) {
             console.log("Erro ao cadastrar funcionário >> " + error);
             return false;
+        }
+    }
+
+
+
+    async verificarFuncionario() {
+        const conexao = Banco.getConexao();
+    
+        const mysql = 'SELECT * FROM funcionarios WHERE  registro = ? OR cpf = ?'
+        try {
+            const [result] = await conexao.promise().execute(mysql, [this.registro,this.cpf]);    
+            if (result.length > 0) {
+                return true;
+            } else {
+                return false
+            }
+        } catch (erro) {
+            console.error('Erro ao verificar funcionário:', erro);
+            throw erro;
         }
     }
     

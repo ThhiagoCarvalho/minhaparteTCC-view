@@ -19,28 +19,35 @@ module.exports = class RouterFuncionario {
         );
        
         this._router.post('/login', 
-            this._middleFuncionario.validarDadosFuncionario,
+            this._middleFuncionario.validar_cpf,
+            this._middleFuncionario.validar_senha,
+
             this._middleFuncionario.verificarFuncionarioExistente,
+            this._controleFuncionario.controle_funcionario_login
+        )
+
+        this._router.post('/', 
+            this._middleFuncionario.validar_cpf,
+            this._middleFuncionario.validar_senha,
+            this._middleFuncionario.verificarFuncionarioNaoExistente,
             this._controleFuncionario.controle_funcionario_post
         )
 
 
         this._router.delete('/:id', 
-            this._middleFuncionario.validarDadosFuncionario,
             this._middleFuncionario.verificarFuncionarioExistente,
             this._controleFuncionario.controle_funcionario_delete
         )
 
 
         this._router.put('/:id', 
-            this._middleFuncionario.validarDadosFuncionario,
+            this._middleFuncionario.validar_cpf,
+            this._middleFuncionario.validar_senha,
             this._middleFuncionario.verificarFuncionarioExistente,
             this._controleFuncionario.controle_funcionario_put
         )
 
         this._router.get('/buscarPagina/:id', 
-            this._middleFuncionario.validarDadosFuncionario,
-            this._middleFuncionario.verificarFuncionarioExistente,
             this._controleFuncionario.controle_funcionario_get_page
         )
 
