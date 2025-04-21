@@ -2,7 +2,7 @@ const Banco = require("./Banco")
 
 module.exports = class Aluno {
 
-    constructor() { 
+    constructor() {
         this._matricula = null
         this._nome = ""
         this._turma = ""
@@ -15,7 +15,7 @@ module.exports = class Aluno {
         const conexao = Banco.getConexao();
         console.log(this.matricula);
         const mysql = "SELECT * FROM Aluno WHERE matricula = ?";
-    
+
         try {
             const [result] = await conexao.promise().execute(mysql, [this._matricula]);
             if (result.length === 1) {
@@ -31,19 +31,19 @@ module.exports = class Aluno {
             return false;
         }
     }
-    
 
 
-    async createFromCsv () {
+
+    async createFromCsv() {
 
         const conexao = Banco.getConexao()
         const mysql = "insert into Aluno (matricula,nome,turma,nascimento) values (?,?,?,?)"
-        
+
         try {
-            const [result] = await conexao.promise().execute(mysql , [this._matricula, this._nome, this._turma,this._nascimento])
+            const [result] = await conexao.promise().execute(mysql, [this._matricula, this._nome, this._turma, this._nascimento])
             return result.affectedRows > 0;
-        }catch(error) {
-            console.log("Erro >>"  + error)
+        } catch (error) {
+            console.log("Erro >>" + error)
         }
     }
 
@@ -59,21 +59,20 @@ module.exports = class Aluno {
         }
     }
 
-    async update() {
+    async update(matriculaAntes) {
         console.log("CURSO" + this.curso)
         const conexao = Banco.getConexao();
         const sql = `UPDATE Aluno 
-                     SET nome = ?, turma = ?, nascimento = ?, curso = ?
-                     WHERE matricula = ?`;
-    
+                     SET matricula = ?, nome = ?, turma = ?, nascimento = ?, curso = ?
+                     WHERE matricula = ${matriculaAntes}`;
+
         try {
             const [result] = await conexao.promise().execute(sql, [
+                this._matricula,
                 this._nome,
                 this._turma,
                 this._nascimento,
-                this.curso,
-
-                this._matricula
+                this.curso
             ]);
             return result.affectedRows > 0;
         } catch (error) {
@@ -85,7 +84,7 @@ module.exports = class Aluno {
     async delete() {
         const conexao = Banco.getConexao();
         const sql = "DELETE FROM Aluno WHERE matricula = ?";
-    
+
         try {
             const [result] = await conexao.promise().execute(sql, [this._matricula]);
             return result.affectedRows > 0;
@@ -93,14 +92,14 @@ module.exports = class Aluno {
             console.log("Erro ao deletar aluno >> " + error);
         }
     }
-    
+
     async ReadPage(pagina) {
         let itensPorPagina = 10;
         let inicio = (pagina - 1) * itensPorPagina;
-    
+
         const conexao = Banco.getConexao();
         const sql = `SELECT * FROM Aluno LIMIT ${inicio} , ${itensPorPagina}`;
-    
+
         try {
             const [rows] = await conexao.promise().execute(sql);
             return rows;
@@ -109,44 +108,44 @@ module.exports = class Aluno {
             return [];
         }
     }
-    
+
     async cadastro() {
         const conexao = Banco.getConexao();
-    
+
         const mysql = "INSERT INTO Aluno (matricula, nome, turma, nascimento,curso) VALUES (?, ?, ?,?, ?)";
-    
+
         try {
-            const [result] = await conexao.promise().execute(mysql, [this.matricula, this.nome, this.turma, this.nascimento,this.curso]);
+            const [result] = await conexao.promise().execute(mysql, [this.matricula, this.nome, this.turma, this.nascimento, this.curso]);
             return result.affectedRows > 0;
         } catch (error) {
             console.log("Erro ao cadastrar aluno >> " + error);
             return false;
         }
     }
-    
-    
-    
+
+
+
 
     get matricula() {
         return this._matricula;
     }
-    
+
     set matricula(valor) {
         this._matricula = valor;
     }
-    
+
     get nome() {
         return this._nome;
     }
-    
+
     set nome(valor) {
-          this._nome = valor;
+        this._nome = valor;
     }
-    
+
     get turma() {
         return this._turma;
     }
-    
+
     set turma(valor) {
         this._turma = valor;
     }
@@ -155,18 +154,18 @@ module.exports = class Aluno {
     get curso() {
         return this._curso;
     }
-    
+
     set curso(valor) {
         this._curso = valor;
     }
-    
+
     get nascimento() {
         return this._nascimento;
     }
-    
+
     set nascimento(valor) {
-        this._nascimento = new Date(valor) ;
+        this._nascimento = new Date(valor);
 
     }
-    
+
 }

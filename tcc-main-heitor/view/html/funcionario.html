@@ -163,7 +163,7 @@
                                                     required>
                                             </div>
                                             <div class="col-md-6 mt-2">
-                                                <input type="password" id="senha" class="form-control"
+                                                <input type="text" id="senha" class="form-control"
                                                     placeholder="Senha" required>
                                             </div>
                                             <div class="col-md-6 mt-2">
@@ -221,7 +221,7 @@
                                 <input type="text" id="cpfPost" class="form-control" placeholder="CPF" required>
                             </div>
                             <div class="col-md-6 mt-2">
-                                <input type="password" id="senhaPost" class="form-control" placeholder="Senha" required>
+                                <input type="text" id="senhaPost" class="form-control" placeholder="Senha" required>
                             </div>
                             <div class="col-md-6 mt-2">
                                 <!--  <input type="number" id="tipoFuncionarioPost" class="form-control"
@@ -360,15 +360,6 @@
 
 
 
-        function formatarData(dataISO) {
-            const data = new Date(dataISO);
-            return data.toLocaleDateString('pt-BR', {
-                timeZone: 'UTC'
-            });
-        }
-
-
-
 
         function montarTabelaOpcao(objJson_get) {
             let tbody = TabelaFuncionario.querySelector("tbody");
@@ -431,6 +422,8 @@
                         document.getElementById("registro").value = dados_get.registro;
                         document.getElementById("nome").value = dados_get.nome;
                         document.getElementById("cpf").value = dados_get.cpf;
+                        document.getElementById("senha").value = dados_get.senha;
+
                         document.getElementById("tipoFuncionario").value = dados_get.TipoFuncionario_idTipoFuncionario;
 
                         // Abre o modal

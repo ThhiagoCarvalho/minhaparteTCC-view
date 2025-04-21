@@ -113,8 +113,8 @@ module.exports = class controlAluno {
         objAluno.nascimento=nascimento;
         objAluno.curso=curso;
 
-
-        const sucesso = await objAluno.update();
+        const matriculaAntes = req.params.matricula
+        const sucesso = await objAluno.update(matriculaAntes);
 
         const resposta = {
             resposta: sucesso ? "Aluno atualizado com sucesso" : "Aluno não encontrado ou sem alteração",
