@@ -81,7 +81,7 @@ header .menu-desktop nav ul {
     margin-bottom: 30px;
     transition: transform 0.2s ease;
     width: 100%;
-    max-width: 800px;
+    max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -91,8 +91,10 @@ header .menu-desktop nav ul {
 }
 
 
+
 .caixas {
     margin-top: 30px;
+    justify-content: space-between;
     flex-direction: column;
     align-items: center;
 }

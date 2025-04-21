@@ -203,6 +203,26 @@ async controle_aluno_get_page(req, res) {
 }
 
 
+
+async controle_aluno_get_dadosTurmasMaiorOcorrencias(req, res) {
+  try {
+
+      const objAluno = new Aluno();
+      const turmas = await objAluno.BuscarTurmasMaiorOcorrencias();
+
+      const resposta = {
+          resposta: "Daddos encontrados com sucesso",
+          dados: turmas,
+          status: true
+      };
+
+      res.status(200).send(resposta);
+  } catch (error) {
+      console.log("Erro >>>", error);
+      res.status(500).send({ resposta: "Erro interno", status: false });
+  }
+}
+
 //esta funcao vai ser para buscar os dados do aluno tipo buscar perfil do projeto do estagio
 async controle_aluno_get_perfil(req, res) {
   try {

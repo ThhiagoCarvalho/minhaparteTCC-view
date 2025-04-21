@@ -60,6 +60,10 @@ module.exports = class RouterAluno {
 
 
 
+    
+    this._router.get('/buscarDados/maiorOcorrencias',
+      this._controleAluno.controle_aluno_get_dadosTurmasMaiorOcorrencias
+    );
     return this._router;
   }
 }
