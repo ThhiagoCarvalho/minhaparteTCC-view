@@ -152,19 +152,24 @@
                                             aria-label="Fechar"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <input type="hidden" id="registro">
+                                        <input type="hidden" id="registroAtual">
                                         <div class="row g-2">
                                             <div class="col-md-6">
                                                 <input type="text" id="nome" class="form-control"
                                                     placeholder="Nome do Funcionário" required>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <input type="text" id="registro" class="form-control"
+                                                    placeholder="registro do Funcionário" required>
                                             </div>
                                             <div class="col-md-6">
                                                 <input type="text" id="cpf" class="form-control" placeholder="CPF"
                                                     required>
                                             </div>
                                             <div class="col-md-6 mt-2">
-                                                <input type="text" id="senha" class="form-control"
-                                                    placeholder="Senha" required>
+                                                <input type="text" id="senha" class="form-control" placeholder="Senha"
+                                                    required>
                                             </div>
                                             <div class="col-md-6 mt-2">
 
@@ -418,7 +423,7 @@
                         event.preventDefault();
 
 
-                        // Preenche os dados no formulário
+                        document.getElementById("registroAtual").value = dados_get.registro;
                         document.getElementById("registro").value = dados_get.registro;
                         document.getElementById("nome").value = dados_get.nome;
                         document.getElementById("cpf").value = dados_get.cpf;
@@ -537,15 +542,18 @@
         }
         function post_funcionarios() {
 
-
+            const registro = document.getElementById('registroPost').value;
             const nome = document.getElementById('nomePost').value;
             const cpf = document.getElementById('cpfPost').value;
-            const cargo = document.getElementById('TipoFuncionario_idTipoFuncionarioPost').value;
+            const senha = document.getElementById('senhaPost').value;
+            const cargo = document.getElementById('tipoFuncionarioPost').value;
 
             const jsonEnvio = {
+                "registro": registro,
                 "nome": nome,
+                "senha": senha,
                 "cpfPost": cpf,
-                "TipoFuncionario_idTipoFuncionarioPost": cargo,
+                "TipoFuncionario_idTipoFuncionario": cargo,
             }
 
 
@@ -590,22 +598,40 @@
             update_funcionario()
         }
         function update_funcionario() {
-            const registro = document.getElementById('registro').value
+            let registroAtual = document.getElementById('registroAtual').value;
+            console.log('registroAtual:', registroAtual);
+
+            const registro = document.getElementById('registro').value;
+            console.log('registro:', registro);
+
             const nome = document.getElementById('nome').value;
+            console.log('nome:', nome);
+
             const cpf = document.getElementById('cpf').value;
-            const cargo = document.getElementById('TipoFuncionario_idTipoFuncionario').value;
+            console.log('cpf:', cpf);
+
+            const senha = document.getElementById('senha').value;
+            console.log('senha:', senha);
+
+            const cargo = document.getElementById('tipoFuncionario').value;
+            console.log('cargo:', cargo);
+
 
 
 
             mensage_error.style.display = "none";
             const jsonEnvio = {
+                "registro": registro,
                 "nome": nome,
+                "senha": senha,
                 "cpfPost": cpf,
-                "TipoFuncionario_idTipoFuncionarioPost": cargo,
+                "TipoFuncionario_idTipoFuncionario": cargo
             }
 
+            registroAtual = parseFloat(registroAtual)
 
-            const uri_update_funcionarios = `/funcionarios/${registro}`;
+            console.log("Registro atual" + registroAtual)
+            const uri_update_funcionarios = `/funcionarios/${registroAtual}`;
             fetch(uri_update_funcionarios, {
                 method: "PUT",
                 body: JSON.stringify(jsonEnvio),
@@ -620,7 +646,7 @@
                 console.log(data)
 
                 if (data.status == false) {
-                    let txt = data.msg
+                    let txt = data.resposta
                     mensage_error.textContent = txt
                     mensage_error.style.display = "block";
                 } else {
