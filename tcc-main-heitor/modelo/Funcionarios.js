@@ -60,7 +60,20 @@ module.exports = class Funcionario {
         }
     }
 
+    async ReadCargos() {
+      
+        const conexao = Banco.getConexao();
+        const sql = `SELECT * FROM tipofuncionario;`;
     
+        try {
+            const [rows] = await conexao.promise().execute(sql);
+           
+            return rows;
+        } catch (error) {
+            console.log("Erro ao buscar cargos dos funcionarios >> " + error);
+            return [];
+        }
+    }
     async update() {
         const conexao = Banco.getConexao();
         const sql = `UPDATE Funcionario 

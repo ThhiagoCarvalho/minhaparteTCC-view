@@ -209,6 +209,33 @@ module.exports = class ControlFuncionario {
     }
 
 
+
+    async controle_funcionario_get_cargos(req, res) {
+        try {
+            const objFuncionario = new Funcionario();    
+            const cargosEncontrados = await objFuncionario.ReadCargos();
+    
+            if (cargosEncontrados) {
+                const resposta = {
+                    resposta: "Cargos encontrado com sucesso",
+                    dados: cargosEncontrados,
+                    status: true
+                };
+    
+                res.status(200).send(resposta);
+            } else {
+                res.status(404).send({
+                    resposta: "Funcionário não encontrado",
+                    status: false
+                });
+            }
+        } catch (error) {
+            console.log("Erro >>>", error);
+            res.status(500).send({ resposta: "Erro interno", status: false });
+        }
+    }
+
+
     async controle_funcionario_get_perfil(req, res) {
         try {
             const id = req.params.id;

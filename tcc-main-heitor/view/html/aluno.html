@@ -160,16 +160,23 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <input type="text" id="turma" class="form-control" placeholder="Turma"
-                                                    required>
+                                                required maxlength="2" minlength="2" pattern="[A-Za-z0-9]{2}" title="Digite exatamente 2 caracteres">
                                             </div>
                                             <div class="col-md-6 mt-2">
-                                                <input type="date" id="nascimento" class="form-control"
+                                                <input type="text" id="nascimento" class="form-control"
                                                     placeholder="Nascimento" required>
                                             </div>
 
                                             <div class="col-md-6 mt-2">
-                                                <input type="text" id="curso" class="form-control" placeholder="Curso"
-                                                    required>
+                                                <select id="curso" class="form-control" required>
+                                                    <option value="">Selecione a turma</option>
+                                                    <option value="eletronica">Eletrônica</option>
+                                                    <option value="informatica">informatica</option>
+                                                    <option value="publicidade">Publicidade</option>
+                                                    <option value="quimica">Química</option>
+                                                    <option value="administracao">Administração</option>
+                                                    <option value="analises_clinicas">Análises Clínicas</option>
+                                                </select>
                                             </div>
                                             <div id="error-message" class="text-danger mt-2" style="display: none;">
                                             </div>
@@ -207,20 +214,37 @@
                     <div class="modal-body">
                         <div class="row g-2">
                             <div class="col-md-6">
-                                <input type="text" id="matriculaPost" class="form-control" placeholder="Matrícula"
-                                    required>
-                            </div>
-                            <div class="col-md-6">
                                 <input type="text" id="nomePost" class="form-control" placeholder="Nome do Aluno"
                                     required>
                             </div>
+                            <div class="col-md-6">
+                                <input type="text" id="matriculaPost" class="form-control" placeholder="Matrícula"
+                                required maxlength="8" minlength="8" pattern="\d{8}" title="Digite exatamente 8 números">
+                            
+                            </div>
+
                             <div class="col-md-6 mt-2">
-                                <input type="text" id="turmaPost" class="form-control" placeholder="Turma" required>
+                                <input type="text" id="turmaPost" class="form-control" placeholder="Turma"
+                                required maxlength="2" minlength="2" pattern="[A-Za-z0-9]{2}" title="Digite exatamente 2 caracteres">
+                                                       
+                                
                             </div>
                             <div class="col-md-6 mt-2">
                                 <input type="date" id="nascimentoPost" class="form-control"
                                     placeholder="Data de Nascimento" required>
                             </div>
+                            <div class="col-md-6 mt-2">
+                                <select id="cursoPost" class="form-control" required>
+                                    <option value="">Selecione a turma</option>
+                                    <option value="informatica">Informática</option>
+                                    <option value="eletronica">Eletrônica</option>
+                                    <option value="publicidade">Publicidade</option>
+                                    <option value="quimica">Química</option>
+                                    <option value="administracao">Administração</option>
+                                    <option value="analises_clinicas">Análises Clínicas</option>
+                                </select>
+                            </div>
+                            
                             <div id="error-message_post" class="text-danger mt-2" style="display: none;"></div>
                         </div>
                     </div>
@@ -246,7 +270,7 @@
         // const token = usuario.token
 
         const mensage_error = document.getElementById("error-message");
-        const botaoAtualizar = document.getElementById("botaoAtualizar")
+        const botaoAtualizar = document.getElementById("botaoAtualizarAluno")
 
         const botaoCadastro = document.getElementById("CadastroAluno")
         const mensage_error_post = document.getElementById("error-message_post");
@@ -266,7 +290,7 @@
                     headers: {
                         "Accept": "application/json",
                         "Content-Type": "application/json",
-                        "Authorization": 'Bearer ' + token
+                        //"Authorization": 'Bearer ' + token
                     }
                 }).then((response) => {
                     return response.json();
@@ -315,11 +339,14 @@
 
 
         function formatarData(dataISO) {
-            const data = new Date(dataISO);
-            return data.toLocaleDateString('pt-BR', {
-                timeZone: 'UTC'
-            });
-        }
+    const data = new Date(dataISO);
+    const ano = data.getUTCFullYear();
+    const mes = String(data.getUTCMonth() + 1).padStart(2, '0'); // +1 porque começa em 0
+    const dia = String(data.getUTCDate()).padStart(2, '0');
+
+    return `${ano}-${mes}-${dia}`;
+}
+
 
 
 
@@ -421,7 +448,7 @@
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                  //  "Authorization": 'Bearer ' + token
+                    //  "Authorization": 'Bearer ' + token
                 }
             }).then(res => res.json())
                 .then(data => {
@@ -470,7 +497,7 @@
                 body: formData,
                 headers: {
                     "Accept": "application/json",
-                   // "Authorization": 'Bearer ' + token
+                    // "Authorization": 'Bearer ' + token
                 }
             }).then(res => res.json())
                 .then(data => {
@@ -501,6 +528,7 @@
             cadastro_alunos()
         }
         function cadastro_alunos() {
+            const matricula = document.getElementById('matriculaPost').value;
 
             const nome = document.getElementById('nomePost').value;
             const turma = document.getElementById('turmaPost').value;
@@ -508,6 +536,8 @@
             const curso = document.getElementById('cursoPost').value;
 
             const jsonEnvio = {
+                "matricula": matricula,
+
                 "nome": nome,
                 "turma": turma,
                 "nascimento": nascimento,

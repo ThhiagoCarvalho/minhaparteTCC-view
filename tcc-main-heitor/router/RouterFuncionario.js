@@ -55,6 +55,9 @@ module.exports = class RouterFuncionario {
             this._controleFuncionario.controle_funcionario_get_page
         )
 
+        this._router.get('/cargos/', 
+            this._controleFuncionario.controle_funcionario_get_cargos
+        )
         return this._router
 
     }
