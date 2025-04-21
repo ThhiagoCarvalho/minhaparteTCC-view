@@ -100,7 +100,7 @@ module.exports = class MiddlewareFuncionario {
   verificarCpfDuplicado  = async (req, res, next) => {
     const funcionarios = this.normalizarFuncionarios(req.body);
     const registro = req.params.registro; // id vindo da rota, por exemplo /funcionarios/:id
-
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA " + req.body.cpf)
     const regexCPF = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
 
     for (let i = 0; i < funcionarios.length; i++) {

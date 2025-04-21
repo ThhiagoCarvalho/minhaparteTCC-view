@@ -128,6 +128,7 @@ module.exports = class ControlFuncionario {
 
     async controle_funcionario_put(req, res) {
         try {
+            console.log( "entrou")
             const registro = req.params.registro;
             const nome = req.body.nome;
             const cpf = req.body.cpf;
