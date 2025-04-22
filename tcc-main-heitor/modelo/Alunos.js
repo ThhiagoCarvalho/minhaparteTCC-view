@@ -112,7 +112,7 @@ module.exports = class Aluno {
 
     async BuscarTurmasMaiorOcorrencias() {
         const conexao = Banco.getConexao();
-        const mysql = "SELECT tipo_ocorrencia AS nome, COUNT(*) AS total FROM ocorrencias WHERE turma = ? AND curso = ? GROUP BY tipo_ocorrencia ORDER BY total DESC;";
+        const mysql = "SELECT tipo_ocorrencia AS nome, COUNT(*) AS total FROM ocorrencias WHERE turma = ? AND curso = ? GROUP BY tipo_ocorrencia ORDER BY total DESC limit 3; ";
         try {
             const [result] = await conexao.promise().execute(mysql, [this.turma,this.curso]);
             return result;

@@ -72,7 +72,7 @@ module.exports = class MiddlewareAluno {
       const objAluno = new Aluno();
       objAluno.matricula = matricula;
       const jaExiste = await objAluno.getAluno();
-
+      
       if (!matricula || matricula.length < 1) {
         return res.status(400).json({
           cod: 2,
