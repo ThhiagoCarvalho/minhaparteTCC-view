@@ -309,7 +309,7 @@ button.ativo {
         overflow-y: auto;
         position: absolute;
         background: white;
-        width: 85%;
+        width: 92%;
     }
     .suggestions div {
         padding: 10px;
@@ -336,3 +336,79 @@ button.ativo {
     }
     
     
+    
+/* Classes Página Ocorrencias>*/
+
+
+.form-container {
+    padding-left: 20px;
+    width: 600px; /* Largura do formulário */
+    max-width: 1000px; /* Evita que fique muito grande */
+    z-index: 0;
+}
+
+
+
+.dadosFormsCoordenacao{
+    padding-top: 10px;
+    padding-right: 10px;
+    flex: 1;
+}
+
+.dadosFormsCoordenacao.nome{
+    flex: 3;
+}
+
+.dadosFormsCoordenacao.sala{
+    flex: 1;
+}
+
+.labelFormsCoordenacao{
+    font-weight: 430;
+    margin-bottom: 5px;
+    padding-left: 7px;
+}
+
+.inputFormsCoordenacao{
+    border: none;
+    outline: none;  
+    background-color: #eeeeee;
+    border-radius: 12px;
+    padding: 10px;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    color: #1b1b1b;
+    width: 100%;
+           
+}
+
+.textareaFormsCoordenacao{
+    border: none;
+    outline: none;  
+    background-color: #eeeeee;
+    border-radius: 12px;
+    padding: 10px;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    color: #1b1b1b;
+    width: 100%;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.buttonFormsCoordenacao{
+    padding: 10px;
+}
+
+.buttonFormsCoordenacao{
+
+        margin-top: 10px;
+}
+
+.buttonFormsCoordenacao.enviar{
+    
+    background-color: #00488B;
+    color: #eeeeee;
+    border-radius: 5px;
+    border-style: none;
+}

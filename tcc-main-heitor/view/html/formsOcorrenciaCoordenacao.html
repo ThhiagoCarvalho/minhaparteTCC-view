@@ -22,218 +22,165 @@
 </head>
 
 <body>
+    <div class="wrapper"> <!-- Novo wrapper para separar o menu -->
 
-    <main>
         <header>
-            <div class="wrapper"> <!-- Novo wrapper para separar o menu -->
 
-                <div class="menu-desktop">
-                    <button onclick="abrirmenu()" id="btn-menu">
-                        <span class="linha"></span>
-                        <span class="linha"></span>
-                        <span class="linha"></span>
-                    </button>
-                    <nav>
-                        <ul>
-                            <li><a href="#" onclick="voltarPaginaAnterior(); return false;">Início</a></li>
-                            <li><a href="#">home</a></li>
-                            <li><a href="#">home</a></li>
-                            <li><a href="#">home</a></li>
-                            <li><a href="#">home</a></li>
-                        </ul>
-                    </nav>
-                </div>
+            <div class="menu-desktop">
+                <button onclick="abrirmenu()" id="btn-menu">
+                    <span class="linha"></span>
+                    <span class="linha"></span>
+                    <span class="linha"></span>
+                </button>
+                <nav>
+                    <ul>
+                        <li><a href="#" onclick="voltarPaginaAnterior(); return false;">Início</a></li>
+                        <li><a href="#">home</a></li>
+                        <li><a href="#">home</a></li>
+                        <li><a href="#">home</a></li>
+                        <li><a href="#">home</a></li>
+                    </ul>
+                </nav>
+            </div>
 
 
-                <div class="menu-mobile" id="menu-mobile">
-                    <nav>
-                        <ul>
-                            <li><a href="#" onclick="voltarPaginaAnterior(); return false;">Início</a></li>
-                            <li><a href="#">home</a></li>
-                            <li><a href="#">home</a></li>
-                            <li><a href="#">home</a></li>
-                            <li><a href="#">home</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="container-wrapper">
-                    <div class="form-container">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Finalizar a Ocorrencia</h5>
-                            </div>
-                            <div class="modal-body">
-                                <form id="userForm">
+            <div class="menu-mobile" id="menu-mobile">
+                <nav>
+                    <ul>
+                        <li><a href="#" onclick="voltarPaginaAnterior(); return false;">Início</a></li>
+                        <li><a href="#">home</a></li>
+                        <li><a href="#">home</a></li>
+                        <li><a href="#">home</a></li>
+                        <li><a href="#">home</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <main>
+      
+            <div class="form-container">
+                <form id="userForm">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Finalizar a Ocorrencia</h3>
+                    </div>
+                    <div class="cabecalho">
+                        Aluno xxxx
+                    </div>
 
-                                    <div class="mb-3">
-                                        <label for="relato" class="form-label">Relato do aluno</label>
-                                        <textarea class="form-control" id="relato" rows="2" required></textarea>
-                                    </div>
+                    <!--Linha Nome e Sala-->
+                    <div class="form-row">
 
-                                    <div class="mb-3">
-                                        <label for="relato" class="form-label">Conduta</label>
-                                        <textarea class="form-control" id="relato" rows="2" required></textarea>
-                                    </div>
+                        <!--Nome-->
+                        <div class="dadosFormsCoordenacao nome">
+                            <label for="nome" class="labelFormsCoordenacao">Nome</label><br>
+                            <input class="inputFormsCoordenacao" type="text" id="nome">
+                        </div>
 
-                                    <button type="submit" class="btn btn-primary" id="botaoOk">Enviar</button>
-                                </form>
-                            </div>
+                        <!--Sala-->
+                        <div class="dadosFormsCoordenacao sala">
+                            <label for="sala" class="labelFormsCoordenacao">Sala</label><br>
+                            <input class="inputFormsCoordenacao" type="text" id="sala">
                         </div>
                     </div>
 
-                    <!-- Card do aluno -->
-                    <div id="studentInfo" class="student-info"></div>
-                </div>
+                    <!--Linha Arquivos, Tipo de Ocorrência e Peso-->
+                    <div class="form-row">
 
-            </div>
-        </header>
-    </main>
+                        <!--Arquivos-->
+                        <div class="dadosFormsCoordenacao sala">
+                            <label for="arquivos" class="labelFormsCoordenacao">Arquivos</label><br>
+                            <input class="inputFormsCoordenacao" type="text" id="arquivos">
+                        </div>
 
+                        <!--Tipo de Ocorrência-->
+                        <div class="dadosFormsCoordenacao sala">
+                            <label for="tipoOcorrencia" class="labelFormsCoordenacao">Tipo de Ocorrência</label><br>
+                            <input class="inputFormsCoordenacao" type="text" id="tipoOcorrencia">
+                        </div>
 
-    <script>
-        /*codigo para o menu do site */
-        const menuDiv = document.getElementById("menu-mobile")
-        const btnAnimar = document.getElementById("btn-menu")
-        const forms = document.getElementById("container-wrapper")
+                        <!--Peso Sugerido-->
+                        <div class="dadosFormsCoordenacao sala">
+                            <label for="pesoSugerido" class="labelFormsCoordenacao">Peso Sugerido</label><br>
+                            <input class="inputFormsCoordenacao" type="text" id="pesoSugerido">
+                        </div>
+                    </div>
 
-        btnAnimar.addEventListener('click', animarMenu)
-        function animarMenu() {
-            menuDiv.classList.toggle('abrir')
-            btnAnimar.classList.toggle('ativo')
+                    <!--Relato do Aluno-->
+                    <div class="dadosFormsCoordenacao">
+                        <label for="relato" class="labelFormsCoordenacao">Relato do aluno</label>
+                        <textarea class="textareaFormsCoordenacao" id="relato" rows="2" required></textarea>
+                    </div>
 
-            forms.style.display = "none";
+                    <!--Conduta-->
+                    <div class="dadosFormsCoordenacao">
+                        <label for="conduta" class="labelFormsCoordenacao">Conduta da Orientação</label>
+                        <textarea class="textareaFormsCoordenacao" id="relato" rows="2" required></textarea>
+                    </div>
 
-            if (menuDiv.classList.contains('abrir')) {
-                forms.style.display = "none"; // Esconde o formulário
-            } else {
-                forms.style.display = "flex"; // Mostra o formulário novamente
-            }// Oculta o formulário
-        }
+                    <!--Botão Enviar-->
+                    <div class="buttonRowCoordenacao">
+                        <button type="submit" class="buttonFormsCoordenacao enviar" id="botaoOk">Enviar</button>
+                    </div>
+                </form>
+        </main>
 
-        /*codigo para o funcionamento do forms no site */
+    </div>
+        <script>
+            /*codigo para o menu do site */
+            const menuDiv = document.getElementById("menu-mobile")
+            const btnAnimar = document.getElementById("btn-menu")
+            const forms = document.getElementById("container-wrapper")
+            const botaoOk = document.getElementById("botaoOk")
 
-        const botaoPesquisa = document.getElementById('botaoPesquisa');
-        const sugestaoMatriculas = document.getElementById('sugestaoMatriculas');
-        const matriculaAluno = document.getElementById("matricula");
-        const botaoOk = document.getElementById("botaoOk")
-        const divCardAluno = document.getElementById("studentInfo")
+            btnAnimar.addEventListener('click', animarMenu)
+            function animarMenu() {
+                menuDiv.classList.toggle('abrir')
+                btnAnimar.classList.toggle('ativo')
 
+                forms.style.display = "none";
 
-        matriculaAluno.addEventListener('input', function () {
-            const query = matriculaAluno.value;
-            sugestaoMatriculas.innerHTML = '';
-
-            if (query) {
-                let uri_get_matriculas = `/alunos/matriculas/${query}`;
-                fetch(uri_get_matriculas, {
-                    method: 'get',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        processarResultados(data);
-                    })
-                    .catch((error) => {
-                        console.error("Error:", error);
-                    });
+                if (menuDiv.classList.contains('abrir')) {
+                    forms.style.display = "none"; // Esconde o formulário
+                } else {
+                    forms.style.display = "flex"; // Mostra o formulário novamente
+                }// Oculta o formulário
             }
-        });
 
-        function processarResultados(resultadojson) {
-            console.log('resultadojson', resultadojson)
-            if (resultadojson) {
-                resultadojson.matriculas.forEach(obj => {
-                    const matricula = obj.matricula;
-                    const div = document.createElement('div');
-                    div.textContent = matricula;
-                    div.addEventListener('click', function () {
-                        matriculaAluno.value = matricula;
-                        sugestaoMatriculas.innerHTML = '';
-                    });
-                    sugestaoMatriculas.appendChild(div);
-                });
+            /*codigo para o funcionamento do forms no site */
+
+
+
+       
+
+            botaoOk.onclick = function () {
+                criarOcorrencia()
             }
-        }
 
-        botaoPesquisa.onclick = function () {
-            criarAbaAluno()
-        }
+            function criarOcorrencia() {
+                const horarioClique = new Date();
+                const matricula = matriculaAluno.value
+                console.log("Horário do clique:", horarioClique);
+                console.log("MAtricula do aluno selecionada : ", matricula)
+            }
 
-        function criarAbaAluno() {
-            let uri_get_aluno = `/alunos/${matriculaAluno.value}`;
-            fetch(uri_get_aluno, {
-                method: 'get',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+
+            //armazenar  a pagina anterior dinamicamente
+            document.addEventListener("DOMContentLoaded", function () {
+                if (document.referrer) {
+                    sessionStorage.setItem("paginaAnterior", document.referrer);
                 }
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    processarDadosAlunos(data);
-                    document.getElementById('studentInfo').style.display = 'block'; // Exibe o card
+            });
 
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
-                });
-        }
-
-        function processarDadosAlunos(resultadojson) {
-            const studentInfo = document.getElementById('studentInfo');
-            studentInfo.innerHTML = '';
-
-            const closeButton = document.createElement("button");
-            closeButton.style.float = "right";
-            closeButton.style.background = "transparent";
-            closeButton.style.border = "none";
-            closeButton.style.color = "white";
-            closeButton.style.cursor = "pointer";
-            closeButton.onclick = () => studentInfo.classList.remove('show');
-
-            const nome = document.createElement("p");
-            nome.textContent = `Nome Completo: ${resultadojson.nome}`;
-
-            const turma = document.createElement("p");
-            turma.textContent = `Turma: ${resultadojson.turma}`;
-
-            studentInfo.appendChild(closeButton);
-            studentInfo.appendChild(nome);
-            studentInfo.appendChild(turma);
-        }
-
-        botaoOk.onclick = function () {
-            criarOcorrencia()
-        }
-
-        function criarOcorrencia() {
-            const horarioClique = new Date();
-            const matricula = matriculaAluno.value
-            console.log("Horário do clique:", horarioClique);
-            console.log("MAtricula do aluno selecionada : ", matricula)
-        }
-
-
-        //armazenar  a pagina anterior dinamicamente
-        document.addEventListener("DOMContentLoaded", function () {
-            if (document.referrer) {
-                sessionStorage.setItem("paginaAnterior", document.referrer);
+            // Criar botão para voltar
+            function voltarPaginaAnterior() {
+                const paginaAnterior = sessionStorage.getItem("paginaAnterior");
+                if (paginaAnterior) {
+                    window.location.href = paginaAnterior;
+                } else {
+                    alert("Nenhuma página anterior encontrada!");
+                }
             }
-        });
-
-        // Criar botão para voltar
-        function voltarPaginaAnterior() {
-            const paginaAnterior = sessionStorage.getItem("paginaAnterior");
-            if (paginaAnterior) {
-                window.location.href = paginaAnterior;
-            } else {
-                alert("Nenhuma página anterior encontrada!");
-            }
-        }
-    </script>
+        </script>
 </body>
 
 </html>

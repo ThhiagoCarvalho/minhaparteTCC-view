@@ -66,21 +66,31 @@
                     </nav>
                 </div>
                 <div class="container-wrapper">
+
+                    
                     <!-- Div do formulário -->
                     <div class="form-container">
                         <div class="modal-content">
+            
                             <div class="modal-header">
-                                <h5 class="modal-title">Formulário de Cadastro</h5>
+                                <h3 class="modal-title">Formulário de Cadastro</h3>
                             </div>
                             <div class="modal-body">
+
+
                                 <form id="userForm">
                                     <!-- Container do inputMatricula -->
                                     <div class="mb-3">
+                                        <label for="relato" class="labelFormsCoordenacao">Matricula do aluno</label>
+
                                         <div class="input-group">
-                                            <button type="button" class="btn btn-success" onclick="adicionarMatricula()">
+                                            <button type="button" class="btn btn-success"
+                                                onclick="adicionarMatricula()">
                                                 <i class="bi bi-plus-lg"></i>
                                             </button>
-                                            <input type="text" class="form-control" id="matricula" placeholder="" required>
+                                            
+                                            <input type="text" class="form-control" id="matricula" placeholder=""
+                                                required>
                                             <div class="divpesquisa">
                                                 <span class="input-group-text" id="botaoPesquisa">
                                                     <i class="bi bi-search"></i>
@@ -89,29 +99,36 @@
                                         </div>
                                         <div class="suggestions" id="sugestaoMatriculas"></div>
                                     </div>
-                    
-                                    <!-- Card do aluno (AGORA DENTRO DO FORMULÁRIO) -->
+
                                     <div id="studentInfo" class="student-info"></div>
-                    
-                                    <!-- Restante do formulário (Relato, Arquivo, Botões) -->
-                                    <div class="mb-3">
-                                        <label for="relato" class="form-label" id="relatoFuncionario">Relato do funcionário</label>
-                                        <textarea class="form-control" id="relato" rows="2" required></textarea>
+
+
+                                    <div class="dadosFormsCoordenacao">
+                                        <label for="relato" class="labelFormsCoordenacao">Relato do funcionário</label>
+                                        <textarea class="textareaFormsCoordenacao" id="relatoFuncionario" rows="2"
+                                            required></textarea>
                                     </div>
-                    
-                                    <div class="mb-3">
-                                        <label for="conduta" class="form-label" id="arquivoCSV">Arquivo 'opcional'</label>
-                                        <input type="text" class="form-control" id="conduta" required>
+
+
+                                    <div class="dadosFormsCoordenacao sala">
+                                        <label for="arquivos" class="labelFormsCoordenacao">Arquivos</label><br>
+                                        <input class="inputFormsCoordenacao" type="file" id="arquivoCSV">
                                     </div>
-                    
+
                                     <!-- Botões -->
                                     <div class="d-flex align-items-center">
-                                        <button type="submit" class="btn btn-primary" id="botaoOk">Enviar</button>
-                                        <button type="button" class="btn btn-secondary ms-2 d-none" id="verMatriculas" onclick="abrirModal()">
+                                        <div class="buttonRowCoordenacao">
+                                            <button type="submit" class="buttonFormsCoordenacao enviar"
+                                                id="botaoOk">Enviar</button>
+                                        </div> <button type="button" class="btn btn-secondary ms-2 d-none"
+                                            id="verMatriculas" onclick="abrirModal()">
                                             <i class="bi bi-eye-fill"></i>
                                         </button>
                                     </div>
                                 </form>
+
+
+
                             </div>
                         </div>
                     </div>
@@ -123,22 +140,23 @@
         </header>
     </main>
 
-    <div class="modal fade" id="modalMatriculas" tabindex="-1" aria-labelledby="modalMatriculasLabel" aria-hidden="true">
+    <div class="modal fade" id="modalMatriculas" tabindex="-1" aria-labelledby="modalMatriculasLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modalMatriculasLabel">Matrículas Adicionadas</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalMatriculasLabel">Matrículas Adicionadas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <ul id="listaMatriculas" class="list-group"></ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
             </div>
-            <div class="modal-body">
-              <ul id="listaMatriculas" class="list-group"></ul>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
     <script>
         /*codigo para o menu do site */
         const menuDiv = document.getElementById("menu-mobile")
@@ -173,7 +191,7 @@
             sugestaoMatriculas.innerHTML = '';
 
             if (query) {
-                let uri_get_matriculas = `/alunos/matriculas/${query}`;
+                let uri_get_matriculas = `/alunos/${query}`;
                 fetch(uri_get_matriculas, {
                     method: 'get',
                     headers: {
@@ -267,24 +285,24 @@
             console.log("Horário do clique:", horarioClique);
             console.log("MAtricula do aluno selecionada : ", matricula)
 
-                console.log(`🔹 Matricula ${ocorrencia}:`);
+            console.log(`🔹 Matricula ${ocorrencia}:`);
 
-                fetch("/ocorrencias", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        matricula: vetorMatriculas,
-                        horario: horarioClique,
-                        descricao: relatoFuncionario,
-                        arquivo:arquivo
-                    }),
-                })
-                    .then(response => response.json())
-                    .then(data => console.log("Enviado com sucesso:", data))
-                    .catch(error => console.error("Erro ao enviar:", error));
-            
+            fetch("/ocorrencias", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    matricula: vetorMatriculas,
+                    horario: horarioClique,
+                    descricao: relatoFuncionario,
+                    arquivo: arquivo
+                }),
+            })
+                .then(response => response.json())
+                .then(data => console.log("Enviado com sucesso:", data))
+                .catch(error => console.error("Erro ao enviar:", error));
+
         }
 
 
